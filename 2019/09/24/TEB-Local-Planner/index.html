@@ -76,7 +76,7 @@
 <meta property="og:image" content="http://yoursite.com/home/liousvious/hexo/themes/yilia/images/samples.png">
 <meta property="og:image" content="http://yoursite.com/home/liousvious/hexo/themes/yilia/images/homotopy%20graph%20planner.png">
 <meta property="og:image" content="http://yoursite.com/home/liousvious/hexo/themes/yilia/images/DFS_modified.png">
-<meta property="og:updated_time" content="2019-09-24T11:19:01.179Z">
+<meta property="og:updated_time" content="2019-09-24T11:39:14.229Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="TEB Local Planner Illustrated For The Carlike Robot">
 <meta name="twitter:description" content="1. Timed Elastic Band Path PlanningIntroductionConsidering the optimal feasible collision free trajectory which meanwhile satisifies the dynamic constraint of carlike robot or holonomic ones,Dr.Christ">
@@ -238,7 +238,7 @@
                 
               
 
-              <time title="Created: 2019-09-24 09:11:32 / Modified: 19:19:01" itemprop="dateCreated datePublished" datetime="2019-09-24T09:11:32+08:00">2019-09-24</time>
+              <time title="Created: 2019-09-24 09:11:32 / Modified: 19:39:14" itemprop="dateCreated datePublished" datetime="2019-09-24T09:11:32+08:00">2019-09-24</time>
             </span>
           
             
@@ -658,6 +658,58 @@ The ~set~of~edges~\mathcal{E}~and~vertices~\mathcal{V}~subject~to~ \begin{cases}
 
 
 
+  
+
+  
+    
+      
+<script type="text/x-mathjax-config">
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') {
+          next = next.nextSibling;
+        }
+        if (next && next.nodeName.toLowerCase() === 'br') {
+          next.parentNode.removeChild(next);
+        }
+      }
+    });
+  });
+
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      element = document.getElementById(all[i].inputID + '-Frame').parentNode;
+      if (element.nodeName.toLowerCase() == 'li') {
+        element = element.parentNode;
+      }
+      element.classList.add('has-jax');
+    }
+  });
+</script>
+<script>
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML', () => {
+    MathJax.Hub.Typeset();
+  }, window.MathJax);
+</script>
+
+    
   
 
   
