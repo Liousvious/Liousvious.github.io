@@ -63,24 +63,24 @@
 <meta property="og:site_name" content="Liousvious&#39;s Technical Blog">
 <meta property="og:description" content="1. Timed Elastic Band Path PlanningIntroductionConsidering the optimal feasible collision free trajectory which meanwhile satisifies the dynamic constraint of carlike robot or holonomic ones,Dr.Christ">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="http://yoursite.com/home/liousvious/hexo/themes/yilia/images/Configure.png">
-<meta property="og:image" content="http://yoursite.com/home/liousvious/hexo/themes/yilia/images/carlike_model.png">
-<meta property="og:image" content="http://yoursite.com/home/liousvious/hexo/themes/yilia/images/obstacle%20influence.png">
-<meta property="og:image" content="http://yoursite.com/home/liousvious/hexo/themes/yilia/images/LM.png">
-<meta property="og:image" content="http://yoursite.com/home/liousvious/hexo/themes/yilia/images/local_optimality.png">
-<meta property="og:image" content="http://yoursite.com/home/liousvious/hexo/themes/yilia/images/Cauchy.png">
-<meta property="og:image" content="http://yoursite.com/home/liousvious/hexo/themes/yilia/images/homotopy%20homology.png">
-<meta property="og:image" content="http://yoursite.com/home/liousvious/hexo/themes/yilia/images/homotopy%20but%20not%20homology.png">
-<meta property="og:image" content="http://yoursite.com/home/liousvious/hexo/themes/yilia/images/analytic%20computation.png">
-<meta property="og:image" content="http://yoursite.com/home/liousvious/hexo/themes/yilia/images/H-augmented.png">
-<meta property="og:image" content="http://yoursite.com/home/liousvious/hexo/themes/yilia/images/samples.png">
-<meta property="og:image" content="http://yoursite.com/home/liousvious/hexo/themes/yilia/images/homotopy%20graph%20planner.png">
-<meta property="og:image" content="http://yoursite.com/home/liousvious/hexo/themes/yilia/images/DFS_modified.png">
-<meta property="og:updated_time" content="2019-09-24T12:02:10.414Z">
+<meta property="og:image" content="http://yoursite.com/2019/09/24/img/Configure.png">
+<meta property="og:image" content="http://yoursite.com/2019/09/24/img/carlike_model.png">
+<meta property="og:image" content="http://yoursite.com/2019/09/24/img/obstacle%20influence.png">
+<meta property="og:image" content="http://yoursite.com/2019/09/24/img/LM.png">
+<meta property="og:image" content="http://yoursite.com/2019/09/24/img/local_optimality.png">
+<meta property="og:image" content="http://yoursite.com/2019/09/24/img/Cauchy.png">
+<meta property="og:image" content="http://yoursite.com/2019/09/24/img/homotopy%20homology.png">
+<meta property="og:image" content="http://yoursite.com/2019/09/24/img/homotopy%20but%20not%20homology.png">
+<meta property="og:image" content="http://yoursite.com/2019/09/24/img/analytic%20computation.png">
+<meta property="og:image" content="http://yoursite.com/2019/09/24/img/H-augmented.png">
+<meta property="og:image" content="http://yoursite.com/2019/09/24/img/samples.png">
+<meta property="og:image" content="http://yoursite.com/2019/09/24/img/homotopy%20graph%20planner.png">
+<meta property="og:image" content="http://yoursite.com/2019/09/24/img/DFS_modified.png">
+<meta property="og:updated_time" content="2019-09-24T12:13:58.193Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="TEB Local Planner Illustrated For The Carlike Robot">
 <meta name="twitter:description" content="1. Timed Elastic Band Path PlanningIntroductionConsidering the optimal feasible collision free trajectory which meanwhile satisifies the dynamic constraint of carlike robot or holonomic ones,Dr.Christ">
-<meta name="twitter:image" content="http://yoursite.com/home/liousvious/hexo/themes/yilia/images/Configure.png">
+<meta name="twitter:image" content="http://yoursite.com/2019/09/24/img/Configure.png">
   <link rel="canonical" href="http://yoursite.com/2019/09/24/TEB-Local-Planner/">
 
 
@@ -238,7 +238,7 @@
                 
               
 
-              <time title="Created: 2019-09-24 09:11:32 / Modified: 20:02:10" itemprop="dateCreated datePublished" datetime="2019-09-24T09:11:32+08:00">2019-09-24</time>
+              <time title="Created: 2019-09-24 09:11:32 / Modified: 20:13:58" itemprop="dateCreated datePublished" datetime="2019-09-24T09:11:32+08:00">2019-09-24</time>
             </span>
           
             
@@ -266,7 +266,7 @@ s_i=[x_i,y_i,\beta_i]^T\in \mathbb{R}×S^1 \tag{1.1}</script><p>and therefore th
 <script type="math/tex; mode=display">B:=(C, \tau)  \tag{1.4}</script><p>From above knowledge,we construct a combinatorial optimization objective:</p>
 <script type="math/tex; mode=display">f(B) = \sum_{i}\gamma_i f_i(B) \tag{1.5}</script><script type="math/tex; mode=display">B^*=argmin~f(B) \tag{1.6}</script><p>in which  <strong><em>B*</em></strong> denotes the optimal parameter which the car’s motion will follow in subsequent temporal intervals.The timed elastic band configuration sapce is shown in <strong>Figure 1</strong> as following statements.</p>
 <div align="center">
-    <img src="/home/liousvious/hexo/themes/yilia/images/Configure.png" width="530" height="200" alt="Figure 1.Configuration Space of TEB" align="center">
+    <img src="../img/Configure.png" width="530" height="200" alt="Figure 1.Configuration Space of TEB" align="center">
 </div>
 
 <a id="more"></a>
@@ -285,7 +285,7 @@ s_i=[x_i,y_i,\beta_i]^T\in \mathbb{R}×S^1 \tag{1.1}</script><p>and therefore th
                                                                                      {tan^{-1}(Lv^{-1}(t)\beta'(t))}\\
                        \end{bmatrix} \tag{1.9}</script><p>since the detailed illustration will be redefined latter,we will currently ignore the real meanings above for a while.</p>
 <div align="center">
-<img src="/home/liousvious/hexo/themes/yilia/images/carlike_model.png" width="570" height="270" alt="Figure 2.Nonholonomic Constraint" align="center">
+<img src="../img/carlike_model.png" width="570" height="270" alt="Figure 2.Nonholonomic Constraint" align="center">
 </div>
 And now we will formulate the nonlinear program objective function,it is the quadradic function w.r.t time resolution and it can be solved by Hyper-Graph optimization in such a high computational efficiency.The formulary described above holds such a following form:
 $$\displaystyle 
@@ -313,7 +313,7 @@ h_k(s_{k+1},s_k)= \begin{pmatrix} \begin{bmatrix} cos(\beta _k)\\
 the maximum radius constraint is described as:
 $$\displaystyle
 \check{r_k}(s_{k+1},s_k)= r_k(s_{k+1},s_k) - r_{min}= \frac{\parallel d \parallel _2}{|2sin(\frac{\Delta \beta _k}{2})|} - r _{min} \approx \frac{\parallel d_k \parallel _2}{\Delta \beta _k} - r _{min}, ~with~ condition~ that~ \Delta \beta _k <<1 \tag{1.13}$$ in configuration space,the obstales constraint can be denoted as **figure 3**: $$\displaystyle o _k(s_k)~="\lbrack" \delta(s_k, o_1),\delta(s_k, o_2),...,\delta(s_k, o_l) \rbrack ^t - \lbrack \delta _{min},\delta _{min},...,\delta _{min} ^{t} \tag{1.14} \\ s.t.~\delta (s_k, o): \mathbb{r} ^2×s^1×o \longrightarrow \mathbb{r}~is~the~distance~between~the~obstacles~and~configurations~in~euclidean~metric.$$ <div align="center">
-<img src="/home/liousvious/hexo/themes/yilia/images/obstacle influence.png" width="530" height="330" alt="Figure 3.Constraint of obstacles" align="center">
+<img src="../img/obstacle influence.png" width="530" height="330" alt="Figure 3.Constraint of obstacles" align="center">
 
 The velocities and accelerations limitations can be calculated via TEB configurations:
 $$\displaystyle
@@ -360,12 +360,12 @@ $$\displaystyle
 \\
 i.e.\begin{cases}\mu =\mu .max \lbrace \frac{1}{3},1-(2\eta-1)^3 \rbrace,\eta >0\\
 \mu=\mu.v;v=2,\eta <0\\ \end{cases} \tag{1.22}$$ **figure 4** denotes the lm method: <div align="center">
-<img src="/home/liousvious/hexo/themes/yilia/images/LM.png" width="480" height="400" alt="Figure 4.Levenberg-Marquardt Algorithm" align="center">
+<img src="../img/LM.png" width="480" height="400" alt="Figure 4.Levenberg-Marquardt Algorithm" align="center">
 
 
 <h3 id="Planning-in-Distinctive-Homotopy-amp-Homology-Classes"><a href="#Planning-in-Distinctive-Homotopy-amp-Homology-Classes" class="headerlink" title="Planning in Distinctive Homotopy&amp;Homology Classes"></a>Planning in Distinctive Homotopy&amp;Homology Classes</h3><p>In the section <strong>Planning in Configuration Space</strong>,a novel optimization local planner was introduced to cope with the local optimal problem which happend because of the influence of static and dynamical obstacles make the optimum locally.Suppose that there is a situation that a trajactory connects start to goal and goes through a narrow gap between two obstacles which are distributed in both sides of the middle line ,obviously,the straight line connecting start and goal points is the shortest,thus optimal,but keeping close to each other is not a better choice since it will introduce a certain large cost and the trajectory is rejected,therefore a compromise will lead to local optimality rather a best one,and it will lead infeasibility trajectories <strong>Figure 5</strong>.</p>
 <div align="center">
-<img src="/home/liousvious/hexo/themes/yilia/images/local_optimality.png" width="480" height="280" alt="Figure 5.Local optimality" align="center">
+<img src="../img/local_optimality.png" width="480" height="280" alt="Figure 5.Local optimality" align="center">
 </div>
 
 <h4 id="A-Planning-With-Complex-Analysis-Method"><a href="#A-Planning-With-Complex-Analysis-Method" class="headerlink" title="A. Planning With Complex Analysis Method"></a><em>A. Planning With Complex Analysis Method</em></h4><p>In this part,I will illustrate how to make a bridge to <strong>configuration sapce</strong> with <strong>complex space</strong>,one of the most excellent work is the <strong>Cauchy Integral Theorem</strong> which states that a Holomorphic(analytical) function in some simply connected region with a closed contour makes the following formularies hold make this connection possible.</p>
@@ -374,7 +374,7 @@ i.e.\begin{cases}\mu =\mu .max \lbrace \frac{1}{3},1-(2\eta-1)^3 \rbrace,\eta >0
 \oint _\gamma \frac{f(z)}{z-z _0}dz~=2\pi if(z_0)~(z_0 ~is~enclosed~by~a~anticlockwise~orientation~contour~\gamma~thus~a~pole~of~F(z)=\frac{f(z)}{z-z_0}) \tag{1.23}</script><p><strong>The Residue Theorem</strong> is in the fundamental of Cauchy Integral Theorem which is a direct result of homotopy equivalence class.The residue theorem states <strong>Figure 6</strong>:</p>
 <script type="math/tex; mode=display">\displaystyle
 \oint _\gamma F(z)~dz~=2\pi i \sum _{k=1} ^m \lim _{\xi \rightarrow a_{kl}}(\xi - a_{kl})F(\xi) \tag{1.24}</script><div align="center">
-<img src="/home/liousvious/hexo/themes/yilia/images/Cauchy.png" width="450" height="220" alt="Figure 6.Illustration of residue theorem" align="center">
+<img src="../img/Cauchy.png" width="450" height="220" alt="Figure 6.Illustration of residue theorem" align="center">
 </div>
 From another respective,the configuration space of Euclidian form can be equivalently represented by complex space of Euclidian,we can view the simple trajectories in configuration space as segments of contour of complex space and meanwhile the obstacles as polars of a specific constructed function.Therefore, the **Obstacle Marker Function** is defined as:
 $$\displaystyle
@@ -400,14 +400,14 @@ $$\displaystyle
 \int _{\gamma 1} \mathscr{F}(z)~dz~+ \int _{-\gamma 2} \mathscr{F}(z)~dz~=2\pi i \sum _{k=1}^n\lim _{\xi \rightarrow \zeta_{\kappa k}}(\xi -\zeta_{\kappa k})\mathscr{F}(z) =2\pi i\sum _{k=1}^n f _{\kappa k}(\zeta _{\kappa k}) ~\not=0 \Longrightarrow \int _{\gamma 1} \mathscr{F}(z)~dz~\not= \int _{\gamma 2} \mathscr{F}(z)~dz \\
 in~ which~ \mathbb{O}_\kappa=\lbrace  \zeta _{\kappa 1},\zeta _{\kappa 2},...,\zeta _{\kappa n} \rbrace~is~an~arbitrary~subset~permutation~of ~\mathbb{O}=\lbrace \zeta _1,\zeta _2,...,\zeta _l \rbrace \tag{1.31}$$
 <div align="center">
-<img src="/home/liousvious/hexo/themes/yilia/images/homotopy homology.png" width="690" height="410" alt="Figure 7.Relationship Illustration of homotopy and homology" align="center">
+<img src="../img/homotopy homology.png" width="690" height="410" alt="Figure 7.Relationship Illustration of homotopy and homology" align="center">
 </div>
 In result,each homotopy class can be denoted by a unique charicteristic value called **H-invariant** or **H-signature**:
 $$\displaystyle
 H _{invariant}(\gamma)~= \int _{\gamma ~\in~ \Gamma} \mathscr{F}(z)~dz \tag{1.32}$$
 On the one side,homotopy class can be considered equivalent to homology class in most applications,nevertheless,on the other side,there are a little bit differences which homology trajectories are not homotopy ones **Figure 8**.
 <div align="center">
-<img src="/home/liousvious/hexo/themes/yilia/images/homotopy but not homology.png" width="680" height="300" alt="Figure 8.Homology but not homology" align="center">
+<img src="../img/homotopy but not homology.png" width="680" height="300" alt="Figure 8.Homology but not homology" align="center">
 </div>
 
 <h4 id="B-H-invariant-Computation-of-Homotopy-Class"><a href="#B-H-invariant-Computation-of-Homotopy-Class" class="headerlink" title="B. H-invariant Computation of Homotopy Class"></a><em>B. H-invariant Computation of Homotopy Class</em></h4><p>H-signature can be computed via analytical <strong>Figure 9</strong>or numerical approaches,For a given graph,every edge will be denoted as a convex combination:</p>
@@ -421,7 +421,7 @@ numerical~scheme:\begin{cases}H_{invariant}(\mathscr{e})~=(z_2-z_1) \int _0^1 \s
 \sum _{m=1}^M A_m[\ln |z_2-\zeta_m| - \ln |z_1 - \zeta_m|+j \min _{k_m} (arg(z_2-\zeta_m)-arg(z_1-\zeta _m)+2k_m\pi)] \\
 \\
 s.t. ~\mathscr{F}(z)~= \sum _{m=1}^M \frac{A_m}{z-\zeta _m}~,where~A_m ~=\frac{f_0(\zeta _m)}{\prod _{j=1,j \not=m} ^M(\zeta _m-\zeta _j)}  \end{cases}  \end{cases}</script><div align="center">
-<img src="/home/liousvious/hexo/themes/yilia/images/analytic computation.png" width="280" height="200" alt="Figure 9.Analytical solution illustration" align="center">
+<img src="../img/analytic computation.png" width="280" height="200" alt="Figure 9.Analytical solution illustration" align="center">
 </div>
 
 <h4 id="C-H-Augmented-Graph"><a href="#C-H-Augmented-Graph" class="headerlink" title="C. H-Augmented Graph"></a><em>C. H-Augmented Graph</em></h4><p>Cosidering the ordinary graph which only constitutes of general edges and vertices,the H-augmented graph includes the H-invariant into the ordinary graph and then it forms as follows:</p>
@@ -433,21 +433,21 @@ s.t. ~\mathscr{F}(z)~= \sum _{m=1}^M \frac{A_m}{z-\zeta _m}~,where~A_m ~=\frac{f
 \\(3).~the ~cost~added~to~the ~edge~\mathcal{E} _H ~is ~same~as~general~graph~edges~\mathcal{E}.
 \end{cases} \tag{1.34}</script><p>It seems that H-augmented graph will be <strong>3-D</strong> compared to the general ones.Meanwhile,because the H-augmented graph contains more detailed information and thus the optimal path in the Haugmented graph must be the optimal path in the general graph. </p>
 <div align="center">
-<img src="/home/liousvious/hexo/themes/yilia/images/H-augmented.png" width="650" height="290" alt="Figure 9.Analytical solution illustration" align="center">
+<img src="../img/H-augmented.png" width="650" height="290" alt="Figure 9.Analytical solution illustration" align="center">
 </div>
 
 <h4 id="D-Trajectories-Finding-in-Distinctive-Homotopy-Classes"><a href="#D-Trajectories-Finding-in-Distinctive-Homotopy-Classes" class="headerlink" title="D. Trajectories Finding in Distinctive Homotopy Classes"></a><em>D. Trajectories Finding in Distinctive Homotopy Classes</em></h4><p>Recalling the statements referred in the beginning of this section,TEB local planner often find a trajactory which be always trapped into the local optimality.Therefore,a feasible trajectory finding method which is in the foundation of distictive homotopy classes will be used to cope with this tricky problem.In order to find an optimal trajectory in distinctive classes,two steps of finding all simple paths and filtering homologue paths is combined into a single search algorithm which is a modified <strong>Depth First Search</strong> algorithm,first of all,a certain large number of samples in a selected region is required<strong>Figure 10</strong>,</p>
 <p><div align="center">
-<img src="/home/liousvious/hexo/themes/yilia/images/samples.png" width="550" height="350" alt="Figure 10.Samples in an expanded region" align="center">
+<img src="../img/samples.png" width="550" height="350" alt="Figure 10.Samples in an expanded region" align="center">
 </div><br>There is no doubt that Sampling in the selected region with a large number of samples will cause a certain low computation efficiency,on the other side,the dynamic constraint of carlike robot which includes the maximum steering angle and minimum radius will make some edges in the generated graph infeasible.Thus a pair of constraint conditions are displayed as follows <strong>Figure 11</strong> illusrated  the homotopy graph expandation which follows the folloing constraints and green  and red squares denote samples and goal respectively while blue lines are edges:</p>
 <script type="math/tex; mode=display">\displaystyle
 The ~set~of~edges~\mathcal{E}~and~vertices~\mathcal{V}~subject~to~ \begin{cases} 
 \mathscr{R}[\overline{(v_2-v_1)}(z_g-z_s)] \frac{1}{\mid v_2-v_1 \mid ~\mid z_g -z_s \mid}~> \theta,where~\theta~\in~[0,1]\\
 \\\mathcal{L}~=\lbrace v_1+t(v_2-v_1) \mid \forall t \in [0,1] \rbrace   \end{cases} \tag{1.35}</script><p><div align="center">
-<img src="/home/liousvious/hexo/themes/yilia/images/homotopy graph planner.png" width="650" height="360" alt="Figure 11.Homotopy graph expandation" align="center">
+<img src="../img/homotopy graph planner.png" width="650" height="360" alt="Figure 11.Homotopy graph expandation" align="center">
 </div><br>The optimal path can be selected from alternative homotopy classes and the trajectoris in distinctive topologies can be find in a modified depth first search algorithm <strong>Figure 12</strong>:</p>
 <p><div align="center">
-<img src="/home/liousvious/hexo/themes/yilia/images/DFS_modified.png" width="500" height="600" alt="Figure 12.Finding paths in alternative homotopy classes" align="center">
+<img src="../img/DFS_modified.png" width="500" height="600" alt="Figure 12.Finding paths in alternative homotopy classes" align="center">
 </div><br>Here I will show you the recursion steps of depth first search process in an illustrated instance which is shown in <strong>Figure 13</strong>.</p>
 <h3 id="Closed-Loop-Optimization-Sub-opt-Output-Generation"><a href="#Closed-Loop-Optimization-Sub-opt-Output-Generation" class="headerlink" title="Closed Loop Optimization(Sub-opt) Output Generation"></a>Closed Loop Optimization(Sub-opt) Output Generation</h3><hr>
 <h2 id="2-TEB-in-ROS-2D-Navigation-Stack"><a href="#2-TEB-in-ROS-2D-Navigation-Stack" class="headerlink" title="2. TEB in ROS 2D-Navigation Stack"></a>2. TEB in ROS 2D-Navigation Stack</h2><hr>
