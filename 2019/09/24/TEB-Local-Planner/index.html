@@ -64,7 +64,6 @@
 <meta property="og:description" content="1. Timed Elastic Band Path PlanningIntroductionConsidering the optimal feasible collision free trajectory which meanwhile satisifies the dynamic constraint of carlike robot or holonomic ones,Dr.Christ">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://yoursite.com/2019/09/24/img/Configure.png">
-<meta property="og:image" content="http://yoursite.com/2019/09/24/img/Configure.png">
 <meta property="og:image" content="http://yoursite.com/2019/09/24/img/carlike_model.png">
 <meta property="og:image" content="http://yoursite.com/2019/09/24/img/obstacle%20influence.png">
 <meta property="og:image" content="http://yoursite.com/2019/09/24/img/LM.png">
@@ -77,7 +76,7 @@
 <meta property="og:image" content="http://yoursite.com/2019/09/24/img/samples.png">
 <meta property="og:image" content="http://yoursite.com/2019/09/24/img/homotopy%20graph%20planner.png">
 <meta property="og:image" content="http://yoursite.com/2019/09/24/img/DFS_modified.png">
-<meta property="og:updated_time" content="2019-09-24T12:41:04.645Z">
+<meta property="og:updated_time" content="2019-09-24T13:02:15.406Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="TEB Local Planner Illustrated For The Carlike Robot">
 <meta name="twitter:description" content="1. Timed Elastic Band Path PlanningIntroductionConsidering the optimal feasible collision free trajectory which meanwhile satisifies the dynamic constraint of carlike robot or holonomic ones,Dr.Christ">
@@ -239,7 +238,7 @@
                 
               
 
-              <time title="Created: 2019-09-24 09:11:32 / Modified: 20:41:04" itemprop="dateCreated datePublished" datetime="2019-09-24T09:11:32+08:00">2019-09-24</time>
+              <time title="Created: 2019-09-24 09:11:32 / Modified: 21:02:15" itemprop="dateCreated datePublished" datetime="2019-09-24T09:11:32+08:00">2019-09-24</time>
             </span>
           
             
@@ -265,12 +264,11 @@ s_i=[x_i,y_i,\beta_i]^T\in \mathbb{R}×S^1 \tag{1.1}</script><p>and therefore th
 <script type="math/tex; mode=display">C :=\lbrace s_i \rbrace _{i=0...n} ~~ n \in N \tag{1.2}</script><p>The TEB augments this representation into temporal space thus leads to:</p>
 <script type="math/tex; mode=display">\tau = \lbrace \Delta T_i \rbrace _{i=0...n-1} \tag{1.3}</script><p>Thus the TEB is defined as a tuple of the above both sequences:</p>
 <script type="math/tex; mode=display">B:=(C, \tau)  \tag{1.4}</script><p>From above knowledge,we construct a combinatorial optimization objective:</p>
-<script type="math/tex; mode=display">f(B) = \sum_{i}\gamma_i f_i(B) \tag{1.5}</script><script type="math/tex; mode=display">B^*=argmin~f(B) \tag{1.6}</script><p>in which  <strong><em>B*</em></strong> denotes the optimal parameter which the car’s motion will follow in subsequent temporal intervals.The timed elastic band configuration sapce is shown in <strong>Figure 1</strong> as following statements.<br><img src="../img/Configure.png" alt="dsds"></p>
+<script type="math/tex; mode=display">f(B) = \sum_{i}\gamma_i f_i(B) \tag{1.5}</script><script type="math/tex; mode=display">B^*=argmin~f(B) \tag{1.6}</script><p>in which  <strong><em>B*</em></strong> denotes the optimal parameter which the car’s motion will follow in subsequent temporal intervals.The timed elastic band configuration sapce is shown in <strong>Figure 1</strong> as following statements.</p>
 <div align="center">
     <img src="../img/Configure.png" width="530" height="200" alt="Figure 1.Configuration Space of TEB" align="center">
 </div>
 
-<a id="more"></a>
 <h4 id="B-Construct-Carlike-Robot-Optimization"><a href="#B-Construct-Carlike-Robot-Optimization" class="headerlink" title="B. Construct Carlike Robot Optimization"></a><em>B. Construct Carlike Robot Optimization</em></h4><p>In real world applications,carlike robot is a special type of nonholonomic robots which is restricted by the minimum radius constraint thus unable to switch its direction in alternative ways in place.It’s truely causes some difficulties such that we will pursuit some efficient approaches to ovecome these faults.From above statesment,the optimal feasible configurations should hold the following forms:</p>
 <script type="math/tex; mode=display">b=[s_1,\Delta T_1,s_2, \Delta T_2,...,s_n,\Delta T_n]^T ~~~~b \in B \tag{1.7}</script><p>since the following optimization construction is performed as a single direction process,in other words,it can be called open-looped optimization.In order to get the optimal(sub-optimal) control outputs,we will first introduce the dynamical model(Ackmann Steering prototype) to illustrate the relationship between the optimized configurations and control outputs.According to nonlinear differential equation,the carlike robot dynamical model can be described as follows <strong>Figure 2.</strong>:</p>
 <script type="math/tex; mode=display">s'(t)= \begin{bmatrix}                 {x'(t)}\\
