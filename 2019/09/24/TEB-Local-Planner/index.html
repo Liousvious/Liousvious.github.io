@@ -76,7 +76,7 @@
 <meta property="og:image" content="http://yoursite.com/2019/09/24/img/samples.png">
 <meta property="og:image" content="http://yoursite.com/2019/09/24/img/homotopy%20graph%20planner.png">
 <meta property="og:image" content="http://yoursite.com/2019/09/24/img/DFS_modified.png">
-<meta property="og:updated_time" content="2019-09-24T13:29:17.949Z">
+<meta property="og:updated_time" content="2019-09-24T14:12:15.643Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="TEB Local Planner Illustrated For The Carlike Robot">
 <meta name="twitter:description" content="1. Timed Elastic Band Path PlanningIntroductionConsidering the optimal feasible collision free trajectory which meanwhile satisifies the dynamic constraint of carlike robot or holonomic ones,Dr.Christ">
@@ -246,7 +246,7 @@
                 
               
 
-              <time title="Created: 2019-09-24 09:11:32 / Modified: 21:29:17" itemprop="dateCreated datePublished" datetime="2019-09-24T09:11:32+08:00">2019-09-24</time>
+              <time title="Created: 2019-09-24 09:11:32 / Modified: 22:12:15" itemprop="dateCreated datePublished" datetime="2019-09-24T09:11:32+08:00">2019-09-24</time>
             </span>
           
             
@@ -457,18 +457,14 @@ The ~set~of~edges~\mathcal{E}~and~vertices~\mathcal{V}~subject~to~ \begin{cases}
 <p><div align="center">
 <img src="../img/DFS_modified.png" width="500" height="600" alt="Figure 12.Finding paths in alternative homotopy classes" align="center">
 </div><br>Here I will show you the recursion steps of depth first search process in an illustrated instance which is shown in <strong>Figure 13</strong>.</p>
-<h3 id="Closed-Loop-Optimization-Sub-opt-Output-Generation"><a href="#Closed-Loop-Optimization-Sub-opt-Output-Generation" class="headerlink" title="Closed Loop Optimization(Sub-opt) Output Generation"></a>Closed Loop Optimization(Sub-opt) Output Generation</h3><hr>
-<h2 id="2-TEB-in-ROS-2D-Navigation-Stack"><a href="#2-TEB-in-ROS-2D-Navigation-Stack" class="headerlink" title="2. TEB in ROS 2D-Navigation Stack"></a>2. TEB in ROS 2D-Navigation Stack</h2><hr>
+<h3 id="Closed-Loop-Sub-Optimization-Output-Generation"><a href="#Closed-Loop-Sub-Optimization-Output-Generation" class="headerlink" title="Closed Loop (Sub-)Optimization Output Generation"></a>Closed Loop (Sub-)Optimization Output Generation</h3><p>In general,the coarse initial trajectories can be selected from the global planner and thus,the optimizer will generate a series of (sub-)optimal from TEB local planner,and the (sub-)optimum will also be an initial value for the planner in the next sampling interval.Therefore,the optimizer constructs a cloosed loop system,and with help of path finding in distinctive homotopy classes the planner will find an feasible trajectory in a certain region.However,since the optimizations problem minimize transition time towards a fixed final configuration,the strategy will definately shrink the searching horizon thus the leads a shringking length of trajectory,obviously, more configurations must be inserted:</p>
+<script type="math/tex; mode=display">\begin{cases}
+if ~\Delta T_k <\Delta T_{ref}-\Delta T_{hysterisis} \bigwedge n>n _{min},~remove~s _k, \\
+\\
+if ~\Delta T_k >\Delta T_{ref}+\Delta T_{hysterisis} \bigwedge n< n _{max},~remove~s _k.
+\end{cases} ~where~\Delta T_{ref} \in (0,\Delta T _{max}]</script><h2 id="2-TEB-in-ROS-2D-Navigation-Stack"><a href="#2-TEB-in-ROS-2D-Navigation-Stack" class="headerlink" title="2. TEB in ROS 2D-Navigation Stack"></a>2. TEB in ROS 2D-Navigation Stack</h2><hr>
 <p>In summary </p>
-<script type="math/tex; mode=display">\displaystyle
-    \frac{1}{
-        \Bigl(\sqrt{\phi \sqrt{5}}-\phi\Bigr) e^{
-        \frac25 \pi}} = 1+\frac{e^{-2\pi}} {1+\frac{e^{-4\pi}} {
-        1+\frac{e^{-6\pi}}
-        {1+\frac{e^{-8\pi}}
-         {1+\cdots} }
-        }
-    }</script></0\\></1>
+</0\\></1>
     </div>
 
     
@@ -542,7 +538,7 @@ The ~set~of~edges~\mathcal{E}~and~vertices~\mathcal{V}~subject~to~ \begin{cases}
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Timed-Elastic-Band-Path-Planning"><span class="nav-number">1.</span> <span class="nav-text">1. Timed Elastic Band Path Planning</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Introduction"><span class="nav-number">1.1.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Planning-in-Configuration-Space"><span class="nav-number">1.2.</span> <span class="nav-text">Planning in Configuration Space</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#A-Defination-of-Timed-Elastic-Band"><span class="nav-number">1.2.1.</span> <span class="nav-text">A. Defination of Timed Elastic Band</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#B-Construct-Carlike-Robot-Optimization"><span class="nav-number">1.2.2.</span> <span class="nav-text">B. Construct Carlike Robot Optimization</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#A-Planning-With-Complex-Analysis-Method"><span class="nav-number">1.2.3.</span> <span class="nav-text">A. Planning With Complex Analysis Method</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#B-H-invariant-Computation-of-Homotopy-Class"><span class="nav-number">1.2.4.</span> <span class="nav-text">B. H-invariant Computation of Homotopy Class</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#C-H-Augmented-Graph"><span class="nav-number">1.2.5.</span> <span class="nav-text">C. H-Augmented Graph</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#D-Trajectories-Finding-in-Distinctive-Homotopy-Classes"><span class="nav-number">1.2.6.</span> <span class="nav-text">D. Trajectories Finding in Distinctive Homotopy Classes</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Closed-Loop-Optimization-Sub-opt-Output-Generation"><span class="nav-number">1.3.</span> <span class="nav-text">Closed Loop Optimization(Sub-opt) Output Generation</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-TEB-in-ROS-2D-Navigation-Stack"><span class="nav-number">2.</span> <span class="nav-text">2. TEB in ROS 2D-Navigation Stack</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Timed-Elastic-Band-Path-Planning"><span class="nav-number">1.</span> <span class="nav-text">1. Timed Elastic Band Path Planning</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Introduction"><span class="nav-number">1.1.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Planning-in-Configuration-Space"><span class="nav-number">1.2.</span> <span class="nav-text">Planning in Configuration Space</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#A-Defination-of-Timed-Elastic-Band"><span class="nav-number">1.2.1.</span> <span class="nav-text">A. Defination of Timed Elastic Band</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#B-Construct-Carlike-Robot-Optimization"><span class="nav-number">1.2.2.</span> <span class="nav-text">B. Construct Carlike Robot Optimization</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#A-Planning-With-Complex-Analysis-Method"><span class="nav-number">1.2.3.</span> <span class="nav-text">A. Planning With Complex Analysis Method</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#B-H-invariant-Computation-of-Homotopy-Class"><span class="nav-number">1.2.4.</span> <span class="nav-text">B. H-invariant Computation of Homotopy Class</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#C-H-Augmented-Graph"><span class="nav-number">1.2.5.</span> <span class="nav-text">C. H-Augmented Graph</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#D-Trajectories-Finding-in-Distinctive-Homotopy-Classes"><span class="nav-number">1.2.6.</span> <span class="nav-text">D. Trajectories Finding in Distinctive Homotopy Classes</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Closed-Loop-Sub-Optimization-Output-Generation"><span class="nav-number">1.3.</span> <span class="nav-text">Closed Loop (Sub-)Optimization Output Generation</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-TEB-in-ROS-2D-Navigation-Stack"><span class="nav-number">2.</span> <span class="nav-text">2. TEB in ROS 2D-Navigation Stack</span></a></li></ol></div>
         
       </div>
       <!--/noindex-->

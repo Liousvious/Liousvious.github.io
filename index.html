@@ -230,7 +230,7 @@
                 
               
 
-              <time title="Created: 2019-09-24 09:11:32 / Modified: 21:29:17" itemprop="dateCreated datePublished" datetime="2019-09-24T09:11:32+08:00">2019-09-24</time>
+              <time title="Created: 2019-09-24 09:11:32 / Modified: 22:12:15" itemprop="dateCreated datePublished" datetime="2019-09-24T09:11:32+08:00">2019-09-24</time>
             </span>
           
             
@@ -441,18 +441,14 @@ The ~set~of~edges~\mathcal{E}~and~vertices~\mathcal{V}~subject~to~ \begin{cases}
 <p><div align="center">
 <img src="../img/DFS_modified.png" width="500" height="600" alt="Figure 12.Finding paths in alternative homotopy classes" align="center">
 </div><br>Here I will show you the recursion steps of depth first search process in an illustrated instance which is shown in <strong>Figure 13</strong>.</p>
-<h3 id="Closed-Loop-Optimization-Sub-opt-Output-Generation"><a href="#Closed-Loop-Optimization-Sub-opt-Output-Generation" class="headerlink" title="Closed Loop Optimization(Sub-opt) Output Generation"></a>Closed Loop Optimization(Sub-opt) Output Generation</h3><hr>
-<h2 id="2-TEB-in-ROS-2D-Navigation-Stack"><a href="#2-TEB-in-ROS-2D-Navigation-Stack" class="headerlink" title="2. TEB in ROS 2D-Navigation Stack"></a>2. TEB in ROS 2D-Navigation Stack</h2><hr>
+<h3 id="Closed-Loop-Sub-Optimization-Output-Generation"><a href="#Closed-Loop-Sub-Optimization-Output-Generation" class="headerlink" title="Closed Loop (Sub-)Optimization Output Generation"></a>Closed Loop (Sub-)Optimization Output Generation</h3><p>In general,the coarse initial trajectories can be selected from the global planner and thus,the optimizer will generate a series of (sub-)optimal from TEB local planner,and the (sub-)optimum will also be an initial value for the planner in the next sampling interval.Therefore,the optimizer constructs a cloosed loop system,and with help of path finding in distinctive homotopy classes the planner will find an feasible trajectory in a certain region.However,since the optimizations problem minimize transition time towards a fixed final configuration,the strategy will definately shrink the searching horizon thus the leads a shringking length of trajectory,obviously, more configurations must be inserted:</p>
+<script type="math/tex; mode=display">\begin{cases}
+if ~\Delta T_k <\Delta T_{ref}-\Delta T_{hysterisis} \bigwedge n>n _{min},~remove~s _k, \\
+\\
+if ~\Delta T_k >\Delta T_{ref}+\Delta T_{hysterisis} \bigwedge n< n _{max},~remove~s _k.
+\end{cases} ~where~\Delta T_{ref} \in (0,\Delta T _{max}]</script><h2 id="2-TEB-in-ROS-2D-Navigation-Stack"><a href="#2-TEB-in-ROS-2D-Navigation-Stack" class="headerlink" title="2. TEB in ROS 2D-Navigation Stack"></a>2. TEB in ROS 2D-Navigation Stack</h2><hr>
 <p>In summary </p>
-<script type="math/tex; mode=display">\displaystyle
-    \frac{1}{
-        \Bigl(\sqrt{\phi \sqrt{5}}-\phi\Bigr) e^{
-        \frac25 \pi}} = 1+\frac{e^{-2\pi}} {1+\frac{e^{-4\pi}} {
-        1+\frac{e^{-6\pi}}
-        {1+\frac{e^{-8\pi}}
-         {1+\cdots} }
-        }
-    }</script></0\\></1>
+</0\\></1>
         
       
     </div>
