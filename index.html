@@ -241,7 +241,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2019-09-25 10:55:47" itemprop="dateModified" datetime="2019-09-25T10:55:47+08:00">2019-09-25</time>
+                <time title="Modified: 2019-09-25 16:12:23" itemprop="dateModified" datetime="2019-09-25T16:12:23+08:00">2019-09-25</time>
               </span>
             
           
@@ -314,59 +314,54 @@ $$\displaystyle
 \check{r_k}(s_{k+1},s_k)= r_k(s_{k+1},s_k) - r_{min}= \frac{\parallel d \parallel _2}{|2sin(\frac{\Delta \beta _k}{2})|} - r _{min} \approx \frac{\parallel d_k \parallel _2}{\Delta \beta _k} - r _{min}, ~with~ condition~ that~ \Delta \beta _k <<1 \tag{1.13}$$ in configuration space,the obstales constraint can be denoted as **figure 3**: $$\displaystyle o _k(s_k)~="\lbrack" \delta(s_k, o_1),\delta(s_k, o_2),...,\delta(s_k, o_l) \rbrack ^t - \lbrack \delta _{min},\delta _{min},...,\delta _{min} ^{t} \tag{1.14} \\ s.t.~\delta (s_k, o): \mathbb{r} ^2×s^1×o \longrightarrow \mathbb{r}~is~the~distance~between~the~obstacles~and~configurations~in~euclidean~metric.$$ <div align="center">
 <img src="../img/obstacle influence.png" width="530" height="330" alt="Figure 3.Constraint of obstacles" align="center">
 
-The velocities and accelerations limitations can be calculated via TEB configurations:
-$$\displaystyle
+
+<p>The velocities and accelerations limitations can be calculated via TEB configurations:</p>
+<script type="math/tex; mode=display">\displaystyle
 v _k = \frac{r_k \Delta \beta _k}{\Delta T_k}\gamma (s_k,s_{k+1}) \approx \frac{\parallel d_k \parallel _2}{\Delta T_k} \gamma (s_k,s_{k+1}), ~with~the~condition~ \Delta \beta _k \ll 1 ,\\
 \\ a _k ~= \frac{2(v _{k+1}-v _k)}{\Delta T_k+\Delta T_{k+1}},\\
- \\s.t. ~\gamma(s_k,s_{k+1}) =sign( \langle q_k,d_k\rangle ) \approx \frac{\kappa \langle q_k,d_k \rangle}{1+\mid\langle q_k,d_k \rangle \mid} ~denotes~the~direction. \tag{1.15}$$
-However,solving (1.10) directly is not such an simple thing,from the theory of numerical optimization,we can convert the constraint problem to unconstraint,thus soft constraint ones to make a better computational efficiency.It seems like that exterior penalty method behaves well,therefore we define some terms to identify the hard constraints to soft constraints.
-$$\displaystyle
+ \\s.t. ~\gamma(s_k,s_{k+1}) =sign( \langle q_k,d_k\rangle ) \approx \frac{\kappa \langle q_k,d_k \rangle}{1+\mid\langle q_k,d_k \rangle \mid} ~denotes~the~direction. \tag{1.15}</script><p>However,solving (1.10) directly is not such an simple thing,from the theory of numerical optimization,we can convert the constraint problem to unconstraint,thus soft constraint ones to make a better computational efficiency.It seems like that exterior penalty method behaves well,therefore we define some terms to identify the hard constraints to soft constraints.</p>
+<script type="math/tex; mode=display">\displaystyle
 \Phi (h_k,\sigma _h)=\sigma _h h_k^TIh_k=\sigma _h \parallel h _k\parallel _2 ^2  ~(equality ~constraint~penalty~term) \\ 
 \\ 
-\chi(v_k,\sigma _v)=\sigma _v \parallel min \lbrace 0,v_k \rbrace \parallel _2 ^2~(one-sided~quadradic~inequality~penalty~term) \tag{1.16}$$
-Thus (1.10)can be reformulated as soft constraint ones:
-$$\displaystyle
+\chi(v_k,\sigma _v)=\sigma _v \parallel min \lbrace 0,v_k \rbrace \parallel _2 ^2~(one-sided~quadradic~inequality~penalty~term) \tag{1.16}</script><p>Thus (1.10)can be reformulated as soft constraint ones:</p>
+<script type="math/tex; mode=display">\displaystyle
 \check{V}(B)=\sum_{k=1}^{n-1}[\Delta T _k^2+\phi (h_k,\sigma_h)+\chi (\check {r},\sigma _r)+\chi (v _k,\sigma _v)+\chi (o_k,\sigma _o)+\chi (\alpha k, \sigma _\alpha)] +\chi (\alpha _n,\sigma_\alpha)\\
-B^*=argmin_{B \lbrace s_1,s_n \rbrace}\check{V}(B)  \tag{1.17}$$
-According to relative theory,when the penalty weights tend to be infinity, the optimum will be found,in order to get the optimal value,we will use **LM(Levenberg-Marquardt)**method,it can be derived from a simple form like Taylor expandation of the objective function.
-####*C. Levenberg-Marquardt Method Illustration*####
-In order to solve the least square optimization problem above,an efficient strategy will be introduced in the following section,at the beginning,considering the above objective function which excludes the extra constraint terms presents a sketchy and norm form:
-$$\displaystyle
+B^*=argmin_{B \lbrace s_1,s_n \rbrace}\check{V}(B)  \tag{1.17}</script><p>According to relative theory,when the penalty weights tend to be infinity, the optimum will be found,in order to get the optimal value,we will use <strong>LM(Levenberg-Marquardt)</strong>method,it can be derived from a simple form like Taylor expandation of the objective function.  </p>
+<h4 id="C-Levenberg-Marquardt-Method-Illustration"><a href="#C-Levenberg-Marquardt-Method-Illustration" class="headerlink" title="C. Levenberg-Marquardt Method Illustration"></a><em>C. Levenberg-Marquardt Method Illustration</em></h4><p>In order to solve the least square optimization problem above,an efficient strategy will be introduced in the following section,at the beginning,considering the above objective function which excludes the extra constraint terms presents a sketchy and norm form:</p>
+<script type="math/tex; mode=display">\displaystyle
 \check{V}(B)= \frac{1}{2}\sum _{k=1}^n\Delta T_k^2=\frac{1}{2}\parallel T(B)\parallel ^2=\frac{1}{2}T(B)^TT(B)\\
-B^*=argmin_{B \lbrace s_1,s_n \rbrace}\check{V}(B)  \tag{1.18}$$
-Take Taylor expandations both of objective functions and times and substitute the hessian matrix in an approximate way:
-$$\displaystyle
+B^*=argmin_{B \lbrace s_1,s_n \rbrace}\check{V}(B)  \tag{1.18}</script><p>Take Taylor expandations both of objective functions and times and substitute the hessian matrix in an approximate way:</p>
+<script type="math/tex; mode=display">\displaystyle
 T(B+h)=T(B)+Jh+O(h^Th) \\
-\check{V}(B+h) \approx L(h)=\check{V}(B)+J_Fh+\frac{1}{2}h^TH_Fh=\frac{1}{2}T^TT+h^TJ^Tf+\frac{1}{2}h^TJ^TJh \tag{1.19}$$
-now introduce a damping term and then calculate the derivative w.r.t h we will get:
-$$\displaystyle
+\check{V}(B+h) \approx L(h)=\check{V}(B)+J_Fh+\frac{1}{2}h^TH_Fh=\frac{1}{2}T^TT+h^TJ^Tf+\frac{1}{2}h^TJ^TJh \tag{1.19}</script><p>now introduce a damping term and then calculate the derivative w.r.t h we will get:</p>
+<script type="math/tex; mode=display">\displaystyle
 \check{G}(h)=L(h)+\frac{1}{2}\mu h^Th \\
 h^*=argmin_h\check{G}(h) ~take ~derivatives ~w.r.t~h~\Longrightarrow~\\
-J^TT + J^TJh+\mu h=0 \Longrightarrow~(H+\mu I)h=-J^TT=-g \tag{1.20}$$
-suppose that you have some prior knowledge about Newton-Gauss iteration and gradient descent method,I will show that both of the above methods are special cases of LM.
-$$\displaystyle
+J^TT + J^TJh+\mu h=0 \Longrightarrow~(H+\mu I)h=-J^TT=-g \tag{1.20}</script><p>suppose that you have some prior knowledge about Newton-Gauss iteration and gradient descent method,I will show that both of the above methods are special cases of LM.</p>
+<script type="math/tex; mode=display">\displaystyle
 \begin{cases}(1).~when~\mu >0,~and~(H+\mu I)~is ~definite,the~gradient~is~decrease~in~descent~direction\\
 (2).~when~\mu \longrightarrow \infty,~h \approx -\frac{1}{\mu}g=-\frac{1}{\mu}\check{V}(B)'~denotes~gradient~descent~method\\
 (3).~when~\mu \longrightarrow 0,~h \approx -H^{-1}g=-H^{-1}\check{V}(B)'~denotes~Newton~Gauss~iteration
-\end{cases} \tag{1.21}$$
-Adjusting the damping factor in different cases will make the optimun converge in a fast rate,the value of damping factor can be calculated as follows:
-$$\displaystyle
+\end{cases} \tag{1.21}</script><p>Adjusting the damping factor in different cases will make the optimun converge in a fast rate,the value of damping factor can be calculated as follows:</p>
+<script type="math/tex; mode=display">\displaystyle
 \eta=\frac {\check{V}(B)-\check{V}(B+h)}{L(0)-L(h)} ~denotes~ the~fitting~degree~of~\check{V}(B)~and~ L(h),\\
 \begin{cases}\eta ~is~small~denotes~current~value~is~far~from~the~optimal~region,thus~make~\mu~smaller\\
 \eta~is~large~denotes~current~value~is~in~the~near~optimal~region,thus~make~\mu~large
 \end{cases}~ \Longrightarrow
 \\
 i.e.\begin{cases}\mu =\mu .max \lbrace \frac{1}{3},1-(2\eta-1)^3 \rbrace,\eta >0\\
-\mu=\mu.v;v=2,\eta <0\\ \end{cases} \tag{1.22}$$ **figure 4** denotes the lm method: <div align="center">
+\mu=\mu.v;v=2,\eta <0\\
+\end{cases} \tag{1.22}</script><p><strong>Figure 4</strong> denotes the LM method:</p>
+<div align="center">
 <img src="../img/LM.png" width="480" height="400" alt="Figure 4.Levenberg-Marquardt Algorithm" align="center">
+</div>  
 
-----
-### Planning in Distinctive Homotopy&Homology Classes ###
-----
-In the section **Planning in Configuration Space**,a novel optimization local planner was introduced to cope with the local optimal problem which happend because of the influence of static and dynamical obstacles make the optimum locally.Suppose that there is a situation that a trajactory connects start to goal and goes through a narrow gap between two obstacles which are distributed in both sides of the middle line ,obviously,the straight line connecting start and goal points is the shortest,thus optimal,but keeping close to each other is not a better choice since it will introduce a certain large cost and the trajectory is rejected,therefore a compromise will lead to local optimality rather a best one,and it will lead infeasibility trajectories **Figure 5**.
+<hr>
+<h3 id="Planning-in-Distinctive-Homotopy-amp-Homology-Classes"><a href="#Planning-in-Distinctive-Homotopy-amp-Homology-Classes" class="headerlink" title="Planning in Distinctive Homotopy&amp;Homology Classes"></a>Planning in Distinctive Homotopy&amp;Homology Classes</h3><hr>
+<p>In the section <strong>Planning in Configuration Space</strong>,a novel optimization local planner was introduced to cope with the local optimal problem which happend because of the influence of static and dynamical obstacles make the optimum locally.Suppose that there is a situation that a trajactory connects start to goal and goes through a narrow gap between two obstacles which are distributed in both sides of the middle line ,obviously,the straight line connecting start and goal points is the shortest,thus optimal,but keeping close to each other is not a better choice since it will introduce a certain large cost and the trajectory is rejected,therefore a compromise will lead to local optimality rather a best one,and it will lead infeasibility trajectories <strong>Figure 5</strong>.</p>
 <div align="center">
 <img src="../img/local_optimality.png" width="480" height="280" alt="Figure 5.Local optimality" align="center">
-</div>
+</div>  
 
 <h4 id="A-Planning-With-Complex-Analysis-Method"><a href="#A-Planning-With-Complex-Analysis-Method" class="headerlink" title="A. Planning With Complex Analysis Method"></a><em>A. Planning With Complex Analysis Method</em></h4><p>In this part,I will illustrate how to make a bridge to <strong>configuration sapce</strong> with <strong>complex space</strong>,one of the most excellent work is the <strong>Cauchy Integral Theorem</strong> which states that a Holomorphic(analytical) function in some simply connected region with a closed contour makes the following formularies hold make this connection possible.</p>
 <script type="math/tex; mode=display">\displaystyle
@@ -408,7 +403,7 @@ H _{invariant}(\gamma)~= \int _{\gamma ~\in~ \Gamma} \mathscr{F}(z)~dz \tag{1.32
 On the one side,homotopy class can be considered equivalent to homology class in most applications,nevertheless,on the other side,there are a little bit differences which homology trajectories are not homotopy ones **Figure 8**.
 <div align="center">
 <img src="../img/homotopy but not homology.png" width="680" height="300" alt="Figure 8.Homology but not homology" align="center">
-</div>
+</div>    
 
 <h4 id="B-H-invariant-Computation-of-Homotopy-Class"><a href="#B-H-invariant-Computation-of-Homotopy-Class" class="headerlink" title="B. H-invariant Computation of Homotopy Class"></a><em>B. H-invariant Computation of Homotopy Class</em></h4><p>H-signature can be computed via analytical <strong>Figure 9</strong>or numerical approaches,For a given graph,every edge will be denoted as a convex combination:</p>
 <script type="math/tex; mode=display">\displaystyle
@@ -422,7 +417,7 @@ numerical~scheme:\begin{cases}H_{invariant}(\mathscr{e})~=(z_2-z_1) \int _0^1 \s
 \\
 s.t. ~\mathscr{F}(z)~= \sum _{m=1}^M \frac{A_m}{z-\zeta _m}~,where~A_m ~=\frac{f_0(\zeta _m)}{\prod _{j=1,j \not=m} ^M(\zeta _m-\zeta _j)}  \end{cases}  \end{cases}</script><div align="center">
 <img src="../img/analytic computation.png" width="280" height="200" alt="Figure 9.Analytical solution illustration" align="center">
-</div>
+</div>  
 
 <h4 id="C-H-Augmented-Graph"><a href="#C-H-Augmented-Graph" class="headerlink" title="C. H-Augmented Graph"></a><em>C. H-Augmented Graph</em></h4><p>Cosidering the ordinary graph which only constitutes of general edges and vertices,the H-augmented graph includes the H-invariant into the ordinary graph and then it forms as follows:</p>
 <script type="math/tex; mode=display">\displaystyle
@@ -434,7 +429,7 @@ s.t. ~\mathscr{F}(z)~= \sum _{m=1}^M \frac{A_m}{z-\zeta _m}~,where~A_m ~=\frac{f
 \end{cases} \tag{1.34}</script><p>It seems that H-augmented graph will be <strong>3-D</strong> compared to the general ones.Meanwhile,because the H-augmented graph contains more detailed information and thus the optimal path in the Haugmented graph must be the optimal path in the general graph. </p>
 <div align="center">
 <img src="../img/H-augmented.png" width="650" height="290" alt="Figure 9.Analytical solution illustration" align="center">
-</div>
+</div>    
 
 <h4 id="D-Trajectories-Finding-in-Distinctive-Homotopy-Classes"><a href="#D-Trajectories-Finding-in-Distinctive-Homotopy-Classes" class="headerlink" title="D. Trajectories Finding in Distinctive Homotopy Classes"></a><em>D. Trajectories Finding in Distinctive Homotopy Classes</em></h4><p>Recalling the statements referred in the beginning of this section,TEB local planner often find a trajactory which be always trapped into the local optimality.Therefore,a feasible trajectory finding method which is in the foundation of distictive homotopy classes will be used to cope with this tricky problem.In order to find an optimal trajectory in distinctive classes,two steps of finding all simple paths and filtering homologue paths is combined into a single search algorithm which is a modified <strong>Depth First Search</strong> algorithm,first of all,a certain large number of samples in a selected region is required<strong>Figure 10</strong>,</p>
 <div align="center">
@@ -452,7 +447,7 @@ The optimal path can be selected from alternative homotopy classes and the traje
 <div align="center">
 <img src="../img/DFS_modified.png" width="500" height="600" alt="Figure 12.Finding paths in alternative homotopy classes" align="center">
 </div>
-Here I will show you the recursion steps of depth first search process in an illustrated instance which is shown in **Figure 13**.
+Here I will show you the recursion steps of depth first search process in an illustrated instance which is shown in **Figure 13**.    
 
 ### Closed Loop (Sub-)Optimization Output Generation ###
 In general,the coarse initial trajectories can be selected according to the global planner,the optimizer will generate a series of (sub-)optimum from TEB local planner,and these (sub-)optimum will also be an initial value for the planner in the next sampling interval.Therefore,the optimizer constructs a cloosed loop system,and with help of path finding in distinctive homotopy classes the planner will find an feasible trajectory in a certain region.However,since the optimization problem minimize transition time towards a fixed final configuration,the strategy will definately shrink the searching horizon thus leads to a shringking length of trajectory.Obviously, more configurations must be inserted or deleted in order to fit these changes:
@@ -470,11 +465,11 @@ The adaption of length of the horizon for such a shrinking horizon problem offer
 While considering path finding in distinctive homotopy classes,the local planning algoritm will be improved and become a global optimal one with the assistance of homotopy classes.In subsequent iterations of the control loop,T and H generated from **Figure 12** have already contain the optimize candidate trajectories in previous iterations,robot current and goal state are updated according to the novel state and perceptions respectively,this is shown as follows:
 <div align="center">
 <img src="../img/TEB with homotopy.png" width="460" height="400" alt="Figure 14.Finding paths in alternative homotopy classes" align="center">
-</div>
-----
-## 2. TEB in ROS 2D-Navigation Stack ##
-----
-In summary, the TEB local planner can be described as the following figure:
+</div>  
+
+<hr>
+<h2 id="2-TEB-in-ROS-2D-Navigation-Stack"><a href="#2-TEB-in-ROS-2D-Navigation-Stack" class="headerlink" title="2. TEB in ROS 2D-Navigation Stack"></a>2. TEB in ROS 2D-Navigation Stack</h2><hr>
+<p>In summary, the TEB local planner can be described as the following figure:</p>
 <div align="center">
 <img src="../img/Control flow.png" width="530" height="660" alt="Figure 15.Finding paths in alternative homotopy classes" align="center">
 </div>
@@ -485,10 +480,12 @@ For TEB local planner part,the system setup can be realized as **Figure 16**,in 
 In ROS 2D-navigation stack,the interface of local planner will be replaced by TEB local planner and therefore embeded into a real car-like robots which are running ROS **Figure 17**:
 <div align="center">
 <img src="../img/ROS_navigation_teb.png" width="670" height="380" alt="Figure 16.Finding paths in alternative homotopy classes" align="center">
-</div>
+</div>    
 
-<h2 id="3-References"><a href="#3-References" class="headerlink" title="3. References"></a>3. References</h2><p><strong>[1]</strong>  Rosmann C , Feiten W , Wosch T , et al. Efficient trajectory optimization using a sparse model[C]// Mobile Robots (ECMR), 2013 European Conference on. IEEE, 2013.<br><strong>[2]</strong>  Rosmann C , Hoffmann F , Bertram T . [IEEE 2015 European Conference on Mobile Robots (ECMR) - Lincoln, United Kingdom (2015.9.2-2015.9.4)] 2015 European Conference on Mobile Robots (ECMR) - Planning of multiple robot trajectories in distinctive topologies[C]// European Conference on Mobile Robots. IEEE, 2015:1-6.<br><strong>[3]</strong>  Bhattacharya S , Kumar V , Likhachev M . Search-Based Path Planning with Homotopy Class Constraints[C]// Proceedings of the Third Annual Symposium on Combinatorial Search, SOCS 2010, Stone Mountain, Atlanta, Georgia, USA, July 8-10, 2010. DBLP, 2010.<br><strong>[4]</strong>  Roesmann C , Feiten W , Woesch T , et al. Trajectory modification considering dynamic constraints of autonomous robots[C]// Robotics; Proceedings of ROBOTIK 2012; 7th German Conference on. VDE, 2012.<br><strong>[5]</strong> Rösmann, Christoph &amp; Hoffmann, Frank &amp; Bertram, Torsten. (2017). Kinodynamic Trajectory Optimization and Control for Car-Like Robots. 10.1109/IROS.2017.8206458.<br><strong>[6]</strong>  C. Rösmann, F. Hoffmann and T. Bertram: Integrated online trajectory planning and optimization in distinctive topologies, Robotics and Autonomous Systems, Vol. 88, 2017, pp. 142–153.<br><strong>[7]</strong>  Ranganathan, Ananth. (2004). The Levenberg-Marquardt Algorithm. Academia.edu.<br><strong>[8]</strong>  Bhattacharya. Topological and geometric techniques in graph search-based robot planning[J]. Dissertations &amp; Theses - Gradworks, 2012.<br><strong>[9]</strong>  Albers F, Rösmann C, Hoffmann F, et al. Online Trajectory Optimization and Navigation in Dynamic Environments in ROS[J]. 2019.</p>
-</\delta></0\\></1>
+<hr>
+<h2 id="3-References"><a href="#3-References" class="headerlink" title="3. References"></a>3. References</h2><hr>
+<p><strong>[1]</strong>  Rosmann C , Feiten W , Wosch T , et al. Efficient trajectory optimization using a sparse model[C]// Mobile Robots (ECMR), 2013 European Conference on. IEEE, 2013.<br><strong>[2]</strong>  Rosmann C , Hoffmann F , Bertram T . [IEEE 2015 European Conference on Mobile Robots (ECMR) - Lincoln, United Kingdom (2015.9.2-2015.9.4)] 2015 European Conference on Mobile Robots (ECMR) - Planning of multiple robot trajectories in distinctive topologies[C]// European Conference on Mobile Robots. IEEE, 2015:1-6.<br><strong>[3]</strong>  Bhattacharya S , Kumar V , Likhachev M . Search-Based Path Planning with Homotopy Class Constraints[C]// Proceedings of the Third Annual Symposium on Combinatorial Search, SOCS 2010, Stone Mountain, Atlanta, Georgia, USA, July 8-10, 2010. DBLP, 2010.<br><strong>[4]</strong>  Roesmann C , Feiten W , Woesch T , et al. Trajectory modification considering dynamic constraints of autonomous robots[C]// Robotics; Proceedings of ROBOTIK 2012; 7th German Conference on. VDE, 2012.<br><strong>[5]</strong> Rösmann, Christoph &amp; Hoffmann, Frank &amp; Bertram, Torsten. (2017). Kinodynamic Trajectory Optimization and Control for Car-Like Robots. 10.1109/IROS.2017.8206458.<br><strong>[6]</strong>  C. Rösmann, F. Hoffmann and T. Bertram: Integrated online trajectory planning and optimization in distinctive topologies, Robotics and Autonomous Systems, Vol. 88, 2017, pp. 142–153.<br><strong>[7]</strong>  Ranganathan, Ananth. (2004). The Levenberg-Marquardt Algorithm. Academia.edu.<br><strong>[8]</strong>  Bhattacharya. Topological and geometric techniques in graph search-based robot planning[J]. Dissertations &amp; Theses - Gradworks, 2012.<br><strong>[9]</strong>  Albers F, Rösmann C, Hoffmann F, et al. Online Trajectory Optimization and Navigation in Dynamic Environments in ROS[J]. 2019.</p>
+</\delta></1>
         
       
     </div>
