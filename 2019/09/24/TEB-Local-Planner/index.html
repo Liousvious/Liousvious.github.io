@@ -81,7 +81,7 @@
 <meta property="og:image" content="http://yoursite.com/2019/09/24/img/Control%20flow.png">
 <meta property="og:image" content="http://yoursite.com/2019/09/24/img/System%20setup%20of%20TEB.png">
 <meta property="og:image" content="http://yoursite.com/2019/09/24/img/ROS_navigation_teb.png">
-<meta property="og:updated_time" content="2019-09-25T08:12:23.373Z">
+<meta property="og:updated_time" content="2019-09-25T11:15:05.912Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="TEB Local Planner Illustrated For The Car-like Robot">
 <meta name="twitter:description" content="1. Timed Elastic Band Path PlanningIntroductionConsidering the optimal feasible collision free trajectory which meanwhile satisifies the dynamic constraint of carlike robot or holonomic ones,Dr.Christ">
@@ -262,7 +262,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2019-09-25 16:12:23" itemprop="dateModified" datetime="2019-09-25T16:12:23+08:00">2019-09-25</time>
+                <time title="Modified: 2019-09-25 19:15:05" itemprop="dateModified" datetime="2019-09-25T19:15:05+08:00">2019-09-25</time>
               </span>
             
           
@@ -469,8 +469,9 @@ The optimal path can be selected from alternative homotopy classes and the traje
 <img src="../img/DFS_modified.png" width="500" height="600" alt="Figure 12.Finding paths in alternative homotopy classes" align="center">
 </div>
 Here I will show you the recursion steps of depth first search process in an illustrated instance which is shown in **Figure 13**.    
-
+----
 ### Closed Loop (Sub-)Optimization Output Generation ###
+----
 In general,the coarse initial trajectories can be selected according to the global planner,the optimizer will generate a series of (sub-)optimum from TEB local planner,and these (sub-)optimum will also be an initial value for the planner in the next sampling interval.Therefore,the optimizer constructs a cloosed loop system,and with help of path finding in distinctive homotopy classes the planner will find an feasible trajectory in a certain region.However,since the optimization problem minimize transition time towards a fixed final configuration,the strategy will definately shrink the searching horizon thus leads to a shringking length of trajectory.Obviously, more configurations must be inserted or deleted in order to fit these changes:
 $$\begin{cases}
 if ~\Delta T_k <\delta t_{ref}-\delta t_{hysterisis} \bigwedge n>n _{min},~remove~s _k, \\
