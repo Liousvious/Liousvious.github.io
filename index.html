@@ -241,7 +241,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2019-09-25 10:41:24" itemprop="dateModified" datetime="2019-09-25T10:41:24+08:00">2019-09-25</time>
+                <time title="Modified: 2019-09-25 10:47:04" itemprop="dateModified" datetime="2019-09-25T10:47:04+08:00">2019-09-25</time>
               </span>
             
           
@@ -268,15 +268,226 @@ s_i=[x_i,y_i,\beta_i]^T\in \mathbb{R}×S^1 \tag{1.1}</script><p>and therefore th
 <div align="center">
     <img src="../img/Configure.png" width="530" height="200" alt="Figure 1.Configuration Space of TEB" align="center">
 </div>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2019/09/24/TEB-Local-Planner/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
+
+<h4 id="B-Construct-Carlike-Robot-Optimization"><a href="#B-Construct-Carlike-Robot-Optimization" class="headerlink" title="B. Construct Carlike Robot Optimization"></a><em>B. Construct Carlike Robot Optimization</em></h4><p>In real world applications,carlike robot is a special type of nonholonomic robots which is restricted by the minimum radius constraint thus unable to switch its direction in alternative ways in place.It’s truely causes some difficulties such that we will pursuit some efficient approaches to ovecome these faults.From above statesment,the optimal feasible configurations should hold the following forms:</p>
+<script type="math/tex; mode=display">b=[s_1,\Delta T_1,s_2, \Delta T_2,...,s_n,\Delta T_n]^T ~~~~b \in B \tag{1.7}</script><p>since the following optimization construction is performed as a single direction process,in other words,it can be called open-looped optimization.In order to get the optimal(sub-optimal) control outputs,we will first introduce the dynamical model(Ackmann Steering prototype) to illustrate the relationship between the optimized configurations and control outputs.According to nonlinear differential equation,the carlike robot dynamical model can be described as follows <strong>Figure 2.</strong>:</p>
+<script type="math/tex; mode=display">s'(t)= \begin{bmatrix}                 {x'(t)}\\
+                                                           {y'(t)}\\
+                                                           {z'(t)}\\
+                               \end{bmatrix} =  \begin{bmatrix} {v(t)cos(\beta(t))}\\
+                                                                                        {v(t)sin(\beta(t)}\\
+                                                                                        {(v(t)/L)tan(\phi(t))}\\
+                                                            \end{bmatrix} \tag{1.8}</script><p>apparently,the output control sequence can be derived from above,it is denoted by:</p>
+<script type="math/tex; mode=display">u(t)=\begin{bmatrix}                  {v(t)}\\
+                                                          {\phi(t)}\\ 
+                          \end{bmatrix}=\begin{bmatrix} {\gamma(.)\sqrt{x(t)'^2+y(t)'^2}}\\
+                                                                                     {tan^{-1}(Lv^{-1}(t)\beta'(t))}\\
+                       \end{bmatrix} \tag{1.9}</script><p>since the detailed illustration will be redefined latter,we will currently ignore the real meanings above for a while.</p>
+<div align="center">
+<img src="../img/carlike_model.png" width="570" height="270" alt="Figure 2.Nonholonomic Constraint" align="center">
+</div>
+And now we will formulate the nonlinear program objective function,it is the quadradic function w.r.t time resolution and it can be solved by Hyper-Graph optimization in such a high computational efficiency.The formulary described above holds such a following form:
+$$\displaystyle 
+f(B)= \sum_{k=1}^{n-1} \Delta T_k ^2\\
+s.t.~\begin{cases}{s_1=s_c, ~s_n=s_f, 0 \leq \Delta T_k \leq \Delta T_{max}},\\
+h_k(s_{k+1},s_k)=0, \check{r_k}(s_{k+1},s_k) \geq 0, \\
+o_k(s_k) \geq 0,\\
+v_k(s_{k+1}, s_k, \Delta T_k) \geq 0,~(k=1,2,3,...n-1)\\
+\alpha_k (s_{k+2},s_{k+1},s_k,\Delta T_{k+1},\Delta T_k) \geq 0,~(k=2,3,...,n-2)\\
+\alpha_1(s_2,s_1,\Delta T_1) \geq 0, \alpha_n (s_n,s_{n-1},\Delta T_{n-1}) \geq 0.\\
+\end{cases} \tag{1.10}$$
+
+in which according to **Figure 2** the nonholonomic constraint is defined as:
+$$\displaystyle
+h_k(s_{k+1},s_k)= \begin{pmatrix} \begin{bmatrix} cos(\beta _k)\\
+                                                                                             sin(\beta _k)\\
+                                                                                             0
+                                                                 \end{bmatrix} + 
+                                                                 \begin{bmatrix} cos(\beta _{k+1})\\
+                                                                                             sin(\beta_ {k+1})\\
+                                                                                             0
+                                                                 \end{bmatrix}
+                                      \end{pmatrix} × d_k = 0 \tag{1.11} \\
+                                      meanwhile ~\theta _{k,k}=\theta_{k,k+1}$$obviously,the direction of adjacent two configurations is:$$ d _k=s _{k+1}-s _k \tag{1.12}$$
+the maximum radius constraint is described as:
+$$\displaystyle
+\check{r_k}(s_{k+1},s_k)= r_k(s_{k+1},s_k) - r_{min}= \frac{\parallel d \parallel _2}{|2sin(\frac{\Delta \beta _k}{2})|} - r _{min} \approx \frac{\parallel d_k \parallel _2}{\Delta \beta _k} - r _{min}, ~with~ condition~ that~ \Delta \beta _k <<1 \tag{1.13}$$ in configuration space,the obstales constraint can be denoted as **figure 3**: $$\displaystyle o _k(s_k)~="\lbrack" \delta(s_k, o_1),\delta(s_k, o_2),...,\delta(s_k, o_l) \rbrack ^t - \lbrack \delta _{min},\delta _{min},...,\delta _{min} ^{t} \tag{1.14} \\ s.t.~\delta (s_k, o): \mathbb{r} ^2×s^1×o \longrightarrow \mathbb{r}~is~the~distance~between~the~obstacles~and~configurations~in~euclidean~metric.$$ <div align="center">
+<img src="../img/obstacle influence.png" width="530" height="330" alt="Figure 3.Constraint of obstacles" align="center">
+
+The velocities and accelerations limitations can be calculated via TEB configurations:
+$$\displaystyle
+v _k = \frac{r_k \Delta \beta _k}{\Delta T_k}\gamma (s_k,s_{k+1}) \approx \frac{\parallel d_k \parallel _2}{\Delta T_k} \gamma (s_k,s_{k+1}), ~with~the~condition~ \Delta \beta _k \ll 1 ,\\
+\\ a _k ~= \frac{2(v _{k+1}-v _k)}{\Delta T_k+\Delta T_{k+1}},\\
+ \\s.t. ~\gamma(s_k,s_{k+1}) =sign( \langle q_k,d_k\rangle ) \approx \frac{\kappa \langle q_k,d_k \rangle}{1+\mid\langle q_k,d_k \rangle \mid} ~denotes~the~direction. \tag{1.15}$$
+However,solving (1.10) directly is not such an simple thing,from the theory of numerical optimization,we can convert the constraint problem to unconstraint,thus soft constraint ones to make a better computational efficiency.It seems like that exterior penalty method behaves well,therefore we define some terms to identify the hard constraints to soft constraints.
+$$\displaystyle
+\Phi (h_k,\sigma _h)=\sigma _h h_k^TIh_k=\sigma _h \parallel h _k\parallel _2 ^2  ~(equality ~constraint~penalty~term) \\ 
+\\ 
+\chi(v_k,\sigma _v)=\sigma _v \parallel min \lbrace 0,v_k \rbrace \parallel _2 ^2~(one-sided~quadradic~inequality~penalty~term) \tag{1.16}$$
+Thus (1.10)can be reformulated as soft constraint ones:
+$$\displaystyle
+\check{V}(B)=\sum_{k=1}^{n-1}[\Delta T _k^2+\phi (h_k,\sigma_h)+\chi (\check {r},\sigma _r)+\chi (v _k,\sigma _v)+\chi (o_k,\sigma _o)+\chi (\alpha k, \sigma _\alpha)] +\chi (\alpha _n,\sigma_\alpha)\\
+B^*=argmin_{B \lbrace s_1,s_n \rbrace}\check{V}(B)  \tag{1.17}$$
+According to relative theory,when the penalty weights tend to be infinity, the optimum will be found,in order to get the optimal value,we will use **LM(Levenberg-Marquardt)**method,it can be derived from a simple form like Taylor expandation of the objective function.
+####*C. Levenberg-Marquardt Method Illustration*####
+In order to solve the least square optimization problem above,an efficient strategy will be introduced in the following section,at the beginning,considering the above objective function which excludes the extra constraint terms presents a sketchy and norm form:
+$$\displaystyle
+\check{V}(B)= \frac{1}{2}\sum _{k=1}^n\Delta T_k^2=\frac{1}{2}\parallel T(B)\parallel ^2=\frac{1}{2}T(B)^TT(B)\\
+B^*=argmin_{B \lbrace s_1,s_n \rbrace}\check{V}(B)  \tag{1.18}$$
+Take Taylor expandations both of objective functions and times and substitute the hessian matrix in an approximate way:
+$$\displaystyle
+T(B+h)=T(B)+Jh+O(h^Th) \\
+\check{V}(B+h) \approx L(h)=\check{V}(B)+J_Fh+\frac{1}{2}h^TH_Fh=\frac{1}{2}T^TT+h^TJ^Tf+\frac{1}{2}h^TJ^TJh \tag{1.19}$$
+now introduce a damping term and then calculate the derivative w.r.t h we will get:
+$$\displaystyle
+\check{G}(h)=L(h)+\frac{1}{2}\mu h^Th \\
+h^*=argmin_h\check{G}(h) ~take ~derivatives ~w.r.t~h~\Longrightarrow~\\
+J^TT + J^TJh+\mu h=0 \Longrightarrow~(H+\mu I)h=-J^TT=-g \tag{1.20}$$
+suppose that you have some prior knowledge about Newton-Gauss iteration and gradient descent method,I will show that both of the above methods are special cases of LM.
+$$\displaystyle
+\begin{cases}(1).~when~\mu >0,~and~(H+\mu I)~is ~definite,the~gradient~is~decrease~in~descent~direction\\
+(2).~when~\mu \longrightarrow \infty,~h \approx -\frac{1}{\mu}g=-\frac{1}{\mu}\check{V}(B)'~denotes~gradient~descent~method\\
+(3).~when~\mu \longrightarrow 0,~h \approx -H^{-1}g=-H^{-1}\check{V}(B)'~denotes~Newton~Gauss~iteration
+\end{cases} \tag{1.21}$$
+Adjusting the damping factor in different cases will make the optimun converge in a fast rate,the value of damping factor can be calculated as follows:
+$$\displaystyle
+\eta=\frac {\check{V}(B)-\check{V}(B+h)}{L(0)-L(h)} ~denotes~ the~fitting~degree~of~\check{V}(B)~and~ L(h),\\
+\begin{cases}\eta ~is~small~denotes~current~value~is~far~from~the~optimal~region,thus~make~\mu~smaller\\
+\eta~is~large~denotes~current~value~is~in~the~near~optimal~region,thus~make~\mu~large
+\end{cases}~ \Longrightarrow
+\\
+i.e.\begin{cases}\mu =\mu .max \lbrace \frac{1}{3},1-(2\eta-1)^3 \rbrace,\eta >0\\
+\mu=\mu.v;v=2,\eta <0\\ \end{cases} \tag{1.22}$$ **figure 4** denotes the lm method: <div align="center">
+<img src="../img/LM.png" width="480" height="400" alt="Figure 4.Levenberg-Marquardt Algorithm" align="center">
+
+----
+### Planning in Distinctive Homotopy&Homology Classes ###
+----
+In the section **Planning in Configuration Space**,a novel optimization local planner was introduced to cope with the local optimal problem which happend because of the influence of static and dynamical obstacles make the optimum locally.Suppose that there is a situation that a trajactory connects start to goal and goes through a narrow gap between two obstacles which are distributed in both sides of the middle line ,obviously,the straight line connecting start and goal points is the shortest,thus optimal,but keeping close to each other is not a better choice since it will introduce a certain large cost and the trajectory is rejected,therefore a compromise will lead to local optimality rather a best one,and it will lead infeasibility trajectories **Figure 5**.
+<div align="center">
+<img src="../img/local_optimality.png" width="480" height="280" alt="Figure 5.Local optimality" align="center">
+</div>
+
+<h4 id="A-Planning-With-Complex-Analysis-Method"><a href="#A-Planning-With-Complex-Analysis-Method" class="headerlink" title="A. Planning With Complex Analysis Method"></a><em>A. Planning With Complex Analysis Method</em></h4><p>In this part,I will illustrate how to make a bridge to <strong>configuration sapce</strong> with <strong>complex space</strong>,one of the most excellent work is the <strong>Cauchy Integral Theorem</strong> which states that a Holomorphic(analytical) function in some simply connected region with a closed contour makes the following formularies hold make this connection possible.</p>
+<script type="math/tex; mode=display">\displaystyle
+\oint _\gamma ~f(z)~dz~=0 ~(\gamma~denotes~the~closed~contour)~\Longrightarrow\\
+\oint _\gamma \frac{f(z)}{z-z _0}dz~=2\pi if(z_0)~(z_0 ~is~enclosed~by~a~anticlockwise~orientation~contour~\gamma~thus~a~pole~of~F(z)=\frac{f(z)}{z-z_0}) \tag{1.23}</script><p><strong>The Residue Theorem</strong> is in the fundamental of Cauchy Integral Theorem which is a direct result of homotopy equivalence class.The residue theorem states <strong>Figure 6</strong>:</p>
+<script type="math/tex; mode=display">\displaystyle
+\oint _\gamma F(z)~dz~=2\pi i \sum _{k=1} ^m \lim _{\xi \rightarrow a_{kl}}(\xi - a_{kl})F(\xi) \tag{1.24}</script><div align="center">
+<img src="../img/Cauchy.png" width="450" height="220" alt="Figure 6.Illustration of residue theorem" align="center">
+</div>
+From another respective,the configuration space of Euclidian form can be equivalently represented by complex space of Euclidian,we can view the simple trajectories in configuration space as segments of contour of complex space and meanwhile the obstacles as polars of a specific constructed function.Therefore, the **Obstacle Marker Function** is defined as:
+$$\displaystyle
+\mathscr{F} (z)~=\frac{f_0(z)}{(z-\zeta_1)(z-\zeta_2)...(z-\zeta_l)}\tag{1.25}$$
+In order to represent the trajactories in an analytical form,the following function is defined as:
+$$\displaystyle
+f_i(z)~=\frac{f_0(z)}{(z-\zeta_1)...(z-\zeta_{i-1})(z-\zeta_{i+1})...(z-\zeta_l)} ~(it ~excludes~polar~\zeta _i,which~means~it~is~analytical~in~the~region~which~includes~\zeta _i) \tag{1.26}$$
+Assuming that the summary of this function is not zero in certain specific points:
+$$\displaystyle
+\sum _{k \in L} f_k(\zeta _k) ~\not=0~(where~ L=\lbrace1,2,...l\rbrace) \tag{1.27}$$
+Thus the following lemmas states the equivalence of homotopy classes which are seperated by obstacles(polars) in the complex space.
+**Lemma 1** The trajectories which connect two different points belong to the same homotopy class **Figure 7** have the following relationship hold:
+$$\displaystyle
+\int _{\gamma 1} \mathscr{F}(z)~dz~= \int _{\gamma 2} \mathscr{F}(z)~dz \tag{1.28}$$
+*proof*.According to  **Cauchy Integral Theorem**,the closed loop which constitutes of the two trajectories and enclosed non-polar point will always be zero,i.e.
+$$\displaystyle
+\oint _\gamma ~\mathscr{F}(z)~dz~=\int _{\gamma 1} \mathscr{F}(z)~dz~+ \int _{-\gamma 2} \mathscr{F}(z)~dz=0~\Longrightarrow \int _{\gamma 1} \mathscr{F}(z)~dz~= \int _{\gamma 2} \mathscr{F}(z)~dz \tag{1.29}$$
+**Lemma 2** The trajectories which connect two different points belong to the different homotopy class **Figure 7** have the contrast result relationship which have the form such like **Lemma 1**:
+$$\displaystyle
+\int _{\gamma 1} \mathscr{F}(z)~dz~\not= \int _{\gamma 2} \mathscr{F}(z)~dz \tag{1.30}$$
+*proof*. It can be proved in a similar approach moreover includes the **Residue Theorem**,
+$$\displaystyle
+\int _{\gamma 1} \mathscr{F}(z)~dz~+ \int _{-\gamma 2} \mathscr{F}(z)~dz~=2\pi i \sum _{k=1}^n\lim _{\xi \rightarrow \zeta_{\kappa k}}(\xi -\zeta_{\kappa k})\mathscr{F}(z) =2\pi i\sum _{k=1}^n f _{\kappa k}(\zeta _{\kappa k}) ~\not=0 \Longrightarrow \int _{\gamma 1} \mathscr{F}(z)~dz~\not= \int _{\gamma 2} \mathscr{F}(z)~dz \\
+in~ which~ \mathbb{O}_\kappa=\lbrace  \zeta _{\kappa 1},\zeta _{\kappa 2},...,\zeta _{\kappa n} \rbrace~is~an~arbitrary~subset~permutation~of ~\mathbb{O}=\lbrace \zeta _1,\zeta _2,...,\zeta _l \rbrace \tag{1.31}$$
+<div align="center">
+<img src="../img/homotopy homology.png" width="690" height="410" alt="Figure 7.Relationship Illustration of homotopy and homology" align="center">
+</div>
+In result,each homotopy class can be denoted by a unique charicteristic value called **H-invariant** or **H-signature**:
+$$\displaystyle
+H _{invariant}(\gamma)~= \int _{\gamma ~\in~ \Gamma} \mathscr{F}(z)~dz \tag{1.32}$$
+On the one side,homotopy class can be considered equivalent to homology class in most applications,nevertheless,on the other side,there are a little bit differences which homology trajectories are not homotopy ones **Figure 8**.
+<div align="center">
+<img src="../img/homotopy but not homology.png" width="680" height="300" alt="Figure 8.Homology but not homology" align="center">
+</div>
+
+<h4 id="B-H-invariant-Computation-of-Homotopy-Class"><a href="#B-H-invariant-Computation-of-Homotopy-Class" class="headerlink" title="B. H-invariant Computation of Homotopy Class"></a><em>B. H-invariant Computation of Homotopy Class</em></h4><p>H-signature can be computed via analytical <strong>Figure 9</strong>or numerical approaches,For a given graph,every edge will be denoted as a convex combination:</p>
+<script type="math/tex; mode=display">\displaystyle
+H-invariant~calculation: \begin{cases}  analytical ~scheme:\begin{cases} H_{invariant}(\mathscr{e})~= \int _0 ^1 ~\mathscr{F}((1-\lambda)z_1+\lambda z_2)(z_2-z_1)~d\lambda \tag{1.33}\\
+\\
+s.t.~\mathcal{G}=(\mathcal{V},\mathcal{E})~and ~\mathscr{e}~=\lbrace z_1 \rightarrow z_2 \rbrace \in \mathcal{E} \end{cases} ~(see~Figure~ 8)\\
+\\
+numerical~scheme:\begin{cases}H_{invariant}(\mathscr{e})~=(z_2-z_1) \int _0^1 \sum _{m=1}^M \frac{A_l}{(z_2-z_1)\lambda+(z_1-\zeta_m)}~d\lambda=\sum _{m=1}^M A_m(\ln (z_2-\zeta_m)-\ln (z_1 - \zeta_m)) \\
+\\
+\sum _{m=1}^M A_m[\ln |z_2-\zeta_m| - \ln |z_1 - \zeta_m|+j \min _{k_m} (arg(z_2-\zeta_m)-arg(z_1-\zeta _m)+2k_m\pi)] \\
+\\
+s.t. ~\mathscr{F}(z)~= \sum _{m=1}^M \frac{A_m}{z-\zeta _m}~,where~A_m ~=\frac{f_0(\zeta _m)}{\prod _{j=1,j \not=m} ^M(\zeta _m-\zeta _j)}  \end{cases}  \end{cases}</script><div align="center">
+<img src="../img/analytic computation.png" width="280" height="200" alt="Figure 9.Analytical solution illustration" align="center">
+</div>
+
+<h4 id="C-H-Augmented-Graph"><a href="#C-H-Augmented-Graph" class="headerlink" title="C. H-Augmented Graph"></a><em>C. H-Augmented Graph</em></h4><p>Cosidering the ordinary graph which only constitutes of general edges and vertices,the H-augmented graph includes the H-invariant into the ordinary graph and then it forms as follows:</p>
+<script type="math/tex; mode=display">\displaystyle
+\mathcal{G}_H(\mathcal{G})~=\lbrace \mathcal{V}_H,~\mathcal{E} _H \rbrace \\
+\\s.t.~ \begin{cases} 
+(1).~\mathcal{V} _g~= \lbrace z, ~h_g \rbrace \mid z \in \mathcal{V},and~h_g =H_{invariant}(z_s \rightarrow z)~for~some~trajectories~from~z_s~to~z.\\
+\\(2).~edge ~\lbrace \mathcal{V} _g \longrightarrow \mathcal{V} _g' \rbrace~is~in~\mathcal{E}_H~,iff~\lbrace z \longrightarrow z' \rbrace \in \mathcal{E},and~h_g'~=h_g+H(z \rightarrow z')~hold\\
+\\(3).~the ~cost~added~to~the ~edge~\mathcal{E} _H ~is ~same~as~general~graph~edges~\mathcal{E}.
+\end{cases} \tag{1.34}</script><p>It seems that H-augmented graph will be <strong>3-D</strong> compared to the general ones.Meanwhile,because the H-augmented graph contains more detailed information and thus the optimal path in the Haugmented graph must be the optimal path in the general graph. </p>
+<div align="center">
+<img src="../img/H-augmented.png" width="650" height="290" alt="Figure 9.Analytical solution illustration" align="center">
+</div>
+
+<h4 id="D-Trajectories-Finding-in-Distinctive-Homotopy-Classes"><a href="#D-Trajectories-Finding-in-Distinctive-Homotopy-Classes" class="headerlink" title="D. Trajectories Finding in Distinctive Homotopy Classes"></a><em>D. Trajectories Finding in Distinctive Homotopy Classes</em></h4><p>Recalling the statements referred in the beginning of this section,TEB local planner often find a trajactory which be always trapped into the local optimality.Therefore,a feasible trajectory finding method which is in the foundation of distictive homotopy classes will be used to cope with this tricky problem.In order to find an optimal trajectory in distinctive classes,two steps of finding all simple paths and filtering homologue paths is combined into a single search algorithm which is a modified <strong>Depth First Search</strong> algorithm,first of all,a certain large number of samples in a selected region is required<strong>Figure 10</strong>,</p>
+<div align="center">
+<img src="../img/samples.png" width="550" height="350" alt="Figure 10.Samples in an expanded region" align="center">
+</div>
+There is no doubt that Sampling in the selected region with a large number of samples will cause a certain low computation efficiency,on the other side,the dynamic constraint of carlike robot which includes the maximum steering angle and minimum radius will make some edges in the generated graph infeasible.Thus a pair of constraint conditions are displayed as follows **Figure 11** illusrated  the homotopy graph expandation which follows the folloing constraints and green  and red squares denote samples and goal respectively while blue lines are edges:
+$$\displaystyle
+The ~set~of~edges~\mathcal{E}~and~vertices~\mathcal{V}~subject~to~ \begin{cases} 
+\mathscr{R}[\overline{(v_2-v_1)}(z_g-z_s)] \frac{1}{\mid v_2-v_1 \mid ~\mid z_g -z_s \mid}~> \theta,where~\theta~\in~[0,1]\\
+\\\mathcal{L}~=\lbrace v_1+t(v_2-v_1) \mid \forall t \in [0,1] \rbrace   \end{cases} \tag{1.35}$$
+<div align="center">
+<img src="../img/homotopy graph planner.png" width="650" height="360" alt="Figure 11.Homotopy graph expandation" align="center">
+</div>
+The optimal path can be selected from alternative homotopy classes and the trajectoris in distinctive topologies can be find in a modified depth first search algorithm **Figure 12**:
+<div align="center">
+<img src="../img/DFS_modified.png" width="500" height="600" alt="Figure 12.Finding paths in alternative homotopy classes" align="center">
+</div>
+Here I will show you the recursion steps of depth first search process in an illustrated instance which is shown in **Figure 13**.
+
+### Closed Loop (Sub-)Optimization Output Generation ###
+In general,the coarse initial trajectories can be selected according to the global planner,the optimizer will generate a series of (sub-)optimum from TEB local planner,and these (sub-)optimum will also be an initial value for the planner in the next sampling interval.Therefore,the optimizer constructs a cloosed loop system,and with help of path finding in distinctive homotopy classes the planner will find an feasible trajectory in a certain region.However,since the optimization problem minimize transition time towards a fixed final configuration,the strategy will definately shrink the searching horizon thus leads to a shringking length of trajectory.Obviously, more configurations must be inserted or deleted in order to fit these changes:
+$$\begin{cases}
+if ~\Delta T_k <\delta t_{ref}-\delta t_{hysterisis} \bigwedge n>n _{min},~remove~s _k, \\
+\\
+if ~\Delta T_k >\Delta T_{ref}+\Delta T_{hysterisis} \bigwedge n< n _{max},~remove~s _k.
+\end{cases}
+ \tag{1.36}\\ 
+\\where~\Delta T_{ref} \in (0,\Delta T _{max}]~and~\Delta T_{hysterisis}~avoids~the~oscillations~in~the~number~of~TEB~states.$$
+The adaption of length of the horizon for such a shrinking horizon problem offers a major advantage of decoupling path length and overall transition time:The number of poses as well as the number of motion reversals that are required to satisify the nonholonomic constraint is unknown and changes with dynamic obstacles.A feedback optimization strategy which generates (sub-)optimal control outputs and does not consider the homotopy path finding is shown as follows:
+<div align="center">
+<img src="../img/TEB without homotopy.png" width="450" height="210" alt="Figure 13.Finding paths in alternative homotopy classes" align="center">
+</div>
+While considering path finding in distinctive homotopy classes,the local planning algoritm will be improved and become a global optimal one with the assistance of homotopy classes.In subsequent iterations of the control loop,T and H generated from **Figure 12** have already contain the optimize candidate trajectories in previous iterations,robot current and goal state are updated according to the novel state and perceptions respectively,this is shown as follows:
+<div align="center">
+<img src="../img/TEB with homotopy.png" width="460" height="400" alt="Figure 14.Finding paths in alternative homotopy classes" align="center">
+</div>
+## 2. TEB in ROS 2D-Navigation Stack ##
+
+In summary, the TEB local planner can be described as the following figure:
+<div align="center">
+<img src="../img/Control flow.png" width="530" height="660" alt="Figure 15.Finding paths in alternative homotopy classes" align="center">
+</div>
+For TEB local planner part,the system setup can be realized as **Figure 16**,in each sampling interval,the global planner generates a sparse graph,while the initial path will be optimized in the trajectory optimization step,thus a series of control outputs can be sent to the robot,:
+<div align="center">
+<img src="../img/System setup of TEB.png" width="650" height="300" alt="Figure 16.Finding paths in alternative homotopy classes" align="center">
+</div>
+In ROS 2D-navigation stack,the interface of local planner will be replaced by TEB local planner and therefore embeded into a real car-like robots which are running ROS **Figure 17**:
+<div align="center">
+<img src="../img/ROS_navigation_teb.png" width="670" height="380" alt="Figure 16.Finding paths in alternative homotopy classes" align="center">
+</div>
+
+<h2 id="3-References"><a href="#3-References" class="headerlink" title="3. References"></a>3. References</h2><p><strong>[1]</strong>  Rosmann C , Feiten W , Wosch T , et al. Efficient trajectory optimization using a sparse model[C]// Mobile Robots (ECMR), 2013 European Conference on. IEEE, 2013.<br><strong>[2]</strong>  Rosmann C , Hoffmann F , Bertram T . [IEEE 2015 European Conference on Mobile Robots (ECMR) - Lincoln, United Kingdom (2015.9.2-2015.9.4)] 2015 European Conference on Mobile Robots (ECMR) - Planning of multiple robot trajectories in distinctive topologies[C]// European Conference on Mobile Robots. IEEE, 2015:1-6.<br><strong>[3]</strong>  Bhattacharya S , Kumar V , Likhachev M . Search-Based Path Planning with Homotopy Class Constraints[C]// Proceedings of the Third Annual Symposium on Combinatorial Search, SOCS 2010, Stone Mountain, Atlanta, Georgia, USA, July 8-10, 2010. DBLP, 2010.<br><strong>[4]</strong>  Roesmann C , Feiten W , Woesch T , et al. Trajectory modification considering dynamic constraints of autonomous robots[C]// Robotics; Proceedings of ROBOTIK 2012; 7th German Conference on. VDE, 2012.<br><strong>[5]</strong> Rösmann, Christoph &amp; Hoffmann, Frank &amp; Bertram, Torsten. (2017). Kinodynamic Trajectory Optimization and Control for Car-Like Robots. 10.1109/IROS.2017.8206458.<br><strong>[6]</strong>  C. Rösmann, F. Hoffmann and T. Bertram: Integrated online trajectory planning and optimization in distinctive topologies, Robotics and Autonomous Systems, Vol. 88, 2017, pp. 142–153.<br><strong>[7]</strong>  Ranganathan, Ananth. (2004). The Levenberg-Marquardt Algorithm. Academia.edu.<br><strong>[8]</strong>  Bhattacharya. Topological and geometric techniques in graph search-based robot planning[J]. Dissertations &amp; Theses - Gradworks, 2012.<br><strong>[9]</strong>  Albers F, Rösmann C, Hoffmann F, et al. Online Trajectory Optimization and Navigation in Dynamic Environments in ROS[J]. 2019.</p>
+</\delta></0\\></1>
         
       
     </div>
