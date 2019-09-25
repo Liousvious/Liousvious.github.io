@@ -58,7 +58,7 @@
   <meta name="description" content="1. Timed Elastic Band Path PlanningIntroductionConsidering the optimal feasible collision free trajectory which meanwhile satisifies the dynamic constraint of carlike robot or holonomic ones,Dr.Christ">
 <meta name="keywords" content="Times Elastic Band Approach(TEB),Nonlinear Optimization&#x2F;Programing(NLP),Search Based Sampling Path Planning(SBPP),Homotopy&amp;Homology Class Planning(HCP),Non-holonomic Constraint">
 <meta property="og:type" content="article">
-<meta property="og:title" content="TEB Local Planner Illustrated For The Carlike Robot">
+<meta property="og:title" content="TEB Local Planner Illustrated For The Car-like Robot">
 <meta property="og:url" content="http://yoursite.com/2019/09/24/TEB-Local-Planner/index.html">
 <meta property="og:site_name" content="Liousvious&#39; Technical Blog">
 <meta property="og:description" content="1. Timed Elastic Band Path PlanningIntroductionConsidering the optimal feasible collision free trajectory which meanwhile satisifies the dynamic constraint of carlike robot or holonomic ones,Dr.Christ">
@@ -76,9 +76,14 @@
 <meta property="og:image" content="http://yoursite.com/2019/09/24/img/samples.png">
 <meta property="og:image" content="http://yoursite.com/2019/09/24/img/homotopy%20graph%20planner.png">
 <meta property="og:image" content="http://yoursite.com/2019/09/24/img/DFS_modified.png">
-<meta property="og:updated_time" content="2019-09-24T14:12:15.643Z">
+<meta property="og:image" content="http://yoursite.com/2019/09/24/img/TEB%20without%20homotopy.png">
+<meta property="og:image" content="http://yoursite.com/2019/09/24/img/TEB%20with%20homotopy.png">
+<meta property="og:image" content="http://yoursite.com/2019/09/24/img/Control%20flow.png">
+<meta property="og:image" content="http://yoursite.com/2019/09/24/img/System%20setup%20of%20TEB.png">
+<meta property="og:image" content="http://yoursite.com/2019/09/24/img/ROS_navigation_teb.png">
+<meta property="og:updated_time" content="2019-09-25T02:41:24.430Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="TEB Local Planner Illustrated For The Carlike Robot">
+<meta name="twitter:title" content="TEB Local Planner Illustrated For The Car-like Robot">
 <meta name="twitter:description" content="1. Timed Elastic Band Path PlanningIntroductionConsidering the optimal feasible collision free trajectory which meanwhile satisifies the dynamic constraint of carlike robot or holonomic ones,Dr.Christ">
 <meta name="twitter:image" content="http://yoursite.com/2019/09/24/img/Configure.png">
   <link rel="canonical" href="http://yoursite.com/2019/09/24/TEB-Local-Planner/">
@@ -95,7 +100,7 @@
   };
 </script>
 
-  <title>TEB Local Planner Illustrated For The Carlike Robot | Liousvious' Technical Blog</title>
+  <title>TEB Local Planner Illustrated For The Car-like Robot | Liousvious' Technical Blog</title>
   
 
 
@@ -230,7 +235,7 @@
       <meta itemprop="name" content="Liousvious' Technical Blog">
     </span>
       <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">TEB Local Planner Illustrated For The Carlike Robot
+        <h1 class="post-title" itemprop="name headline">TEB Local Planner Illustrated For The Car-like Robot
 
           
         </h1>
@@ -246,11 +251,19 @@
                 
               
 
-              <time title="Created: 2019-09-24 09:11:32 / Modified: 22:12:15" itemprop="dateCreated datePublished" datetime="2019-09-24T09:11:32+08:00">2019-09-24</time>
+              <time title="Created: 2019-09-24 09:11:32" itemprop="dateCreated datePublished" datetime="2019-09-24T09:11:32+08:00">2019-09-24</time>
             </span>
           
             
 
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2019-09-25 10:41:24" itemprop="dateModified" datetime="2019-09-25T10:41:24+08:00">2019-09-25</time>
+              </span>
             
           
 
@@ -277,6 +290,7 @@ s_i=[x_i,y_i,\beta_i]^T\in \mathbb{R}×S^1 \tag{1.1}</script><p>and therefore th
     <img src="../img/Configure.png" width="530" height="200" alt="Figure 1.Configuration Space of TEB" align="center">
 </div>
 
+<a id="more"></a>
 <h4 id="B-Construct-Carlike-Robot-Optimization"><a href="#B-Construct-Carlike-Robot-Optimization" class="headerlink" title="B. Construct Carlike Robot Optimization"></a><em>B. Construct Carlike Robot Optimization</em></h4><p>In real world applications,carlike robot is a special type of nonholonomic robots which is restricted by the minimum radius constraint thus unable to switch its direction in alternative ways in place.It’s truely causes some difficulties such that we will pursuit some efficient approaches to ovecome these faults.From above statesment,the optimal feasible configurations should hold the following forms:</p>
 <script type="math/tex; mode=display">b=[s_1,\Delta T_1,s_2, \Delta T_2,...,s_n,\Delta T_n]^T ~~~~b \in B \tag{1.7}</script><p>since the following optimization construction is performed as a single direction process,in other words,it can be called open-looped optimization.In order to get the optimal(sub-optimal) control outputs,we will first introduce the dynamical model(Ackmann Steering prototype) to illustrate the relationship between the optimized configurations and control outputs.According to nonlinear differential equation,the carlike robot dynamical model can be described as follows <strong>Figure 2.</strong>:</p>
 <script type="math/tex; mode=display">s'(t)= \begin{bmatrix}                 {x'(t)}\\
@@ -445,26 +459,57 @@ s.t. ~\mathscr{F}(z)~= \sum _{m=1}^M \frac{A_m}{z-\zeta _m}~,where~A_m ~=\frac{f
 </div>
 
 <h4 id="D-Trajectories-Finding-in-Distinctive-Homotopy-Classes"><a href="#D-Trajectories-Finding-in-Distinctive-Homotopy-Classes" class="headerlink" title="D. Trajectories Finding in Distinctive Homotopy Classes"></a><em>D. Trajectories Finding in Distinctive Homotopy Classes</em></h4><p>Recalling the statements referred in the beginning of this section,TEB local planner often find a trajactory which be always trapped into the local optimality.Therefore,a feasible trajectory finding method which is in the foundation of distictive homotopy classes will be used to cope with this tricky problem.In order to find an optimal trajectory in distinctive classes,two steps of finding all simple paths and filtering homologue paths is combined into a single search algorithm which is a modified <strong>Depth First Search</strong> algorithm,first of all,a certain large number of samples in a selected region is required<strong>Figure 10</strong>,</p>
-<p><div align="center">
+<div align="center">
 <img src="../img/samples.png" width="550" height="350" alt="Figure 10.Samples in an expanded region" align="center">
-</div><br>There is no doubt that Sampling in the selected region with a large number of samples will cause a certain low computation efficiency,on the other side,the dynamic constraint of carlike robot which includes the maximum steering angle and minimum radius will make some edges in the generated graph infeasible.Thus a pair of constraint conditions are displayed as follows <strong>Figure 11</strong> illusrated  the homotopy graph expandation which follows the folloing constraints and green  and red squares denote samples and goal respectively while blue lines are edges:</p>
-<script type="math/tex; mode=display">\displaystyle
+</div>
+There is no doubt that Sampling in the selected region with a large number of samples will cause a certain low computation efficiency,on the other side,the dynamic constraint of carlike robot which includes the maximum steering angle and minimum radius will make some edges in the generated graph infeasible.Thus a pair of constraint conditions are displayed as follows **Figure 11** illusrated  the homotopy graph expandation which follows the folloing constraints and green  and red squares denote samples and goal respectively while blue lines are edges:
+$$\displaystyle
 The ~set~of~edges~\mathcal{E}~and~vertices~\mathcal{V}~subject~to~ \begin{cases} 
 \mathscr{R}[\overline{(v_2-v_1)}(z_g-z_s)] \frac{1}{\mid v_2-v_1 \mid ~\mid z_g -z_s \mid}~> \theta,where~\theta~\in~[0,1]\\
-\\\mathcal{L}~=\lbrace v_1+t(v_2-v_1) \mid \forall t \in [0,1] \rbrace   \end{cases} \tag{1.35}</script><p><div align="center">
+\\\mathcal{L}~=\lbrace v_1+t(v_2-v_1) \mid \forall t \in [0,1] \rbrace   \end{cases} \tag{1.35}$$
+<div align="center">
 <img src="../img/homotopy graph planner.png" width="650" height="360" alt="Figure 11.Homotopy graph expandation" align="center">
-</div><br>The optimal path can be selected from alternative homotopy classes and the trajectoris in distinctive topologies can be find in a modified depth first search algorithm <strong>Figure 12</strong>:</p>
-<p><div align="center">
+</div>
+The optimal path can be selected from alternative homotopy classes and the trajectoris in distinctive topologies can be find in a modified depth first search algorithm **Figure 12**:
+<div align="center">
 <img src="../img/DFS_modified.png" width="500" height="600" alt="Figure 12.Finding paths in alternative homotopy classes" align="center">
-</div><br>Here I will show you the recursion steps of depth first search process in an illustrated instance which is shown in <strong>Figure 13</strong>.</p>
-<h3 id="Closed-Loop-Sub-Optimization-Output-Generation"><a href="#Closed-Loop-Sub-Optimization-Output-Generation" class="headerlink" title="Closed Loop (Sub-)Optimization Output Generation"></a>Closed Loop (Sub-)Optimization Output Generation</h3><p>In general,the coarse initial trajectories can be selected from the global planner and thus,the optimizer will generate a series of (sub-)optimal from TEB local planner,and the (sub-)optimum will also be an initial value for the planner in the next sampling interval.Therefore,the optimizer constructs a cloosed loop system,and with help of path finding in distinctive homotopy classes the planner will find an feasible trajectory in a certain region.However,since the optimizations problem minimize transition time towards a fixed final configuration,the strategy will definately shrink the searching horizon thus the leads a shringking length of trajectory,obviously, more configurations must be inserted:</p>
-<script type="math/tex; mode=display">\begin{cases}
-if ~\Delta T_k <\Delta T_{ref}-\Delta T_{hysterisis} \bigwedge n>n _{min},~remove~s _k, \\
+</div>
+Here I will show you the recursion steps of depth first search process in an illustrated instance which is shown in **Figure 13**.
+
+### Closed Loop (Sub-)Optimization Output Generation ###
+In general,the coarse initial trajectories can be selected according to the global planner,the optimizer will generate a series of (sub-)optimum from TEB local planner,and these (sub-)optimum will also be an initial value for the planner in the next sampling interval.Therefore,the optimizer constructs a cloosed loop system,and with help of path finding in distinctive homotopy classes the planner will find an feasible trajectory in a certain region.However,since the optimization problem minimize transition time towards a fixed final configuration,the strategy will definately shrink the searching horizon thus leads to a shringking length of trajectory.Obviously, more configurations must be inserted or deleted in order to fit these changes:
+$$\begin{cases}
+if ~\Delta T_k <\delta t_{ref}-\delta t_{hysterisis} \bigwedge n>n _{min},~remove~s _k, \\
 \\
 if ~\Delta T_k >\Delta T_{ref}+\Delta T_{hysterisis} \bigwedge n< n _{max},~remove~s _k.
-\end{cases} ~where~\Delta T_{ref} \in (0,\Delta T _{max}]</script><h2 id="2-TEB-in-ROS-2D-Navigation-Stack"><a href="#2-TEB-in-ROS-2D-Navigation-Stack" class="headerlink" title="2. TEB in ROS 2D-Navigation Stack"></a>2. TEB in ROS 2D-Navigation Stack</h2><hr>
-<p>In summary </p>
-</0\\></1>
+\end{cases}
+ \tag{1.36}\\ 
+\\where~\Delta T_{ref} \in (0,\Delta T _{max}]~and~\Delta T_{hysterisis}~avoids~the~oscillations~in~the~number~of~TEB~states.$$
+The adaption of length of the horizon for such a shrinking horizon problem offers a major advantage of decoupling path length and overall transition time:The number of poses as well as the number of motion reversals that are required to satisify the nonholonomic constraint is unknown and changes with dynamic obstacles.A feedback optimization strategy which generates (sub-)optimal control outputs and does not consider the homotopy path finding is shown as follows:
+<div align="center">
+<img src="../img/TEB without homotopy.png" width="450" height="210" alt="Figure 13.Finding paths in alternative homotopy classes" align="center">
+</div>
+While considering path finding in distinctive homotopy classes,the local planning algoritm will be improved and become a global optimal one with the assistance of homotopy classes.In subsequent iterations of the control loop,T and H generated from **Figure 12** have already contain the optimize candidate trajectories in previous iterations,robot current and goal state are updated according to the novel state and perceptions respectively,this is shown as follows:
+<div align="center">
+<img src="../img/TEB with homotopy.png" width="460" height="400" alt="Figure 14.Finding paths in alternative homotopy classes" align="center">
+</div>
+## 2. TEB in ROS 2D-Navigation Stack ##
+
+In summary, the TEB local planner can be described as the following figure:
+<div align="center">
+<img src="../img/Control flow.png" width="530" height="660" alt="Figure 15.Finding paths in alternative homotopy classes" align="center">
+</div>
+For TEB local planner part,the system setup can be realized as **Figure 16**,in each sampling interval,the global planner generates a sparse graph,while the initial path will be optimized in the trajectory optimization step,thus a series of control outputs can be sent to the robot,:
+<div align="center">
+<img src="../img/System setup of TEB.png" width="650" height="300" alt="Figure 16.Finding paths in alternative homotopy classes" align="center">
+</div>
+In ROS 2D-navigation stack,the interface of local planner will be replaced by TEB local planner and therefore embeded into a real car-like robots which are running ROS **Figure 17**:
+<div align="center">
+<img src="../img/ROS_navigation_teb.png" width="670" height="380" alt="Figure 16.Finding paths in alternative homotopy classes" align="center">
+</div>
+
+<h2 id="3-References"><a href="#3-References" class="headerlink" title="3. References"></a>3. References</h2><p><strong>[1]</strong>  Rosmann C , Feiten W , Wosch T , et al. Efficient trajectory optimization using a sparse model[C]// Mobile Robots (ECMR), 2013 European Conference on. IEEE, 2013.<br><strong>[2]</strong>  Rosmann C , Hoffmann F , Bertram T . [IEEE 2015 European Conference on Mobile Robots (ECMR) - Lincoln, United Kingdom (2015.9.2-2015.9.4)] 2015 European Conference on Mobile Robots (ECMR) - Planning of multiple robot trajectories in distinctive topologies[C]// European Conference on Mobile Robots. IEEE, 2015:1-6.<br><strong>[3]</strong>  Bhattacharya S , Kumar V , Likhachev M . Search-Based Path Planning with Homotopy Class Constraints[C]// Proceedings of the Third Annual Symposium on Combinatorial Search, SOCS 2010, Stone Mountain, Atlanta, Georgia, USA, July 8-10, 2010. DBLP, 2010.<br><strong>[4]</strong>  Roesmann C , Feiten W , Woesch T , et al. Trajectory modification considering dynamic constraints of autonomous robots[C]// Robotics; Proceedings of ROBOTIK 2012; 7th German Conference on. VDE, 2012.<br><strong>[5]</strong> Rösmann, Christoph &amp; Hoffmann, Frank &amp; Bertram, Torsten. (2017). Kinodynamic Trajectory Optimization and Control for Car-Like Robots. 10.1109/IROS.2017.8206458.<br><strong>[6]</strong>  C. Rösmann, F. Hoffmann and T. Bertram: Integrated online trajectory planning and optimization in distinctive topologies, Robotics and Autonomous Systems, Vol. 88, 2017, pp. 142–153.<br><strong>[7]</strong>  Ranganathan, Ananth. (2004). The Levenberg-Marquardt Algorithm. Academia.edu.<br><strong>[8]</strong>  Bhattacharya. Topological and geometric techniques in graph search-based robot planning[J]. Dissertations &amp; Theses - Gradworks, 2012.<br><strong>[9]</strong>  Albers F, Rösmann C, Hoffmann F, et al. Online Trajectory Optimization and Navigation in Dynamic Environments in ROS[J]. 2019.</p>
+</\delta></0\\></1>
     </div>
 
     
@@ -538,7 +583,7 @@ if ~\Delta T_k >\Delta T_{ref}+\Delta T_{hysterisis} \bigwedge n< n _{max},~remo
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Timed-Elastic-Band-Path-Planning"><span class="nav-number">1.</span> <span class="nav-text">1. Timed Elastic Band Path Planning</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Introduction"><span class="nav-number">1.1.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Planning-in-Configuration-Space"><span class="nav-number">1.2.</span> <span class="nav-text">Planning in Configuration Space</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#A-Defination-of-Timed-Elastic-Band"><span class="nav-number">1.2.1.</span> <span class="nav-text">A. Defination of Timed Elastic Band</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#B-Construct-Carlike-Robot-Optimization"><span class="nav-number">1.2.2.</span> <span class="nav-text">B. Construct Carlike Robot Optimization</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#A-Planning-With-Complex-Analysis-Method"><span class="nav-number">1.2.3.</span> <span class="nav-text">A. Planning With Complex Analysis Method</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#B-H-invariant-Computation-of-Homotopy-Class"><span class="nav-number">1.2.4.</span> <span class="nav-text">B. H-invariant Computation of Homotopy Class</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#C-H-Augmented-Graph"><span class="nav-number">1.2.5.</span> <span class="nav-text">C. H-Augmented Graph</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#D-Trajectories-Finding-in-Distinctive-Homotopy-Classes"><span class="nav-number">1.2.6.</span> <span class="nav-text">D. Trajectories Finding in Distinctive Homotopy Classes</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Closed-Loop-Sub-Optimization-Output-Generation"><span class="nav-number">1.3.</span> <span class="nav-text">Closed Loop (Sub-)Optimization Output Generation</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-TEB-in-ROS-2D-Navigation-Stack"><span class="nav-number">2.</span> <span class="nav-text">2. TEB in ROS 2D-Navigation Stack</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Timed-Elastic-Band-Path-Planning"><span class="nav-number">1.</span> <span class="nav-text">1. Timed Elastic Band Path Planning</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Introduction"><span class="nav-number">1.1.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Planning-in-Configuration-Space"><span class="nav-number">1.2.</span> <span class="nav-text">Planning in Configuration Space</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#A-Defination-of-Timed-Elastic-Band"><span class="nav-number">1.2.1.</span> <span class="nav-text">A. Defination of Timed Elastic Band</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#B-Construct-Carlike-Robot-Optimization"><span class="nav-number">1.2.2.</span> <span class="nav-text">B. Construct Carlike Robot Optimization</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#A-Planning-With-Complex-Analysis-Method"><span class="nav-number">1.2.3.</span> <span class="nav-text">A. Planning With Complex Analysis Method</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#B-H-invariant-Computation-of-Homotopy-Class"><span class="nav-number">1.2.4.</span> <span class="nav-text">B. H-invariant Computation of Homotopy Class</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#C-H-Augmented-Graph"><span class="nav-number">1.2.5.</span> <span class="nav-text">C. H-Augmented Graph</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#D-Trajectories-Finding-in-Distinctive-Homotopy-Classes"><span class="nav-number">1.2.6.</span> <span class="nav-text">D. Trajectories Finding in Distinctive Homotopy Classes</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-References"><span class="nav-number">2.</span> <span class="nav-text">3. References</span></a></li></ol></div>
         
       </div>
       <!--/noindex-->
