@@ -81,7 +81,7 @@
 <meta property="og:image" content="http://yoursite.com/2019/09/24/img/Control%20flow.png">
 <meta property="og:image" content="http://yoursite.com/2019/09/24/img/System%20setup%20of%20TEB.png">
 <meta property="og:image" content="http://yoursite.com/2019/09/24/img/ROS_navigation_teb.png">
-<meta property="og:updated_time" content="2019-09-25T11:15:05.912Z">
+<meta property="og:updated_time" content="2019-09-26T07:03:57.323Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="TEB Local Planner Illustrated For The Car-like Robot">
 <meta name="twitter:description" content="1. Timed Elastic Band Path PlanningIntroductionConsidering the optimal feasible collision free trajectory which meanwhile satisifies the dynamic constraint of carlike robot or holonomic ones,Dr.Christ">
@@ -262,7 +262,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2019-09-25 19:15:05" itemprop="dateModified" datetime="2019-09-25T19:15:05+08:00">2019-09-25</time>
+                <time title="Modified: 2019-09-26 15:03:57" itemprop="dateModified" datetime="2019-09-26T15:03:57+08:00">2019-09-26</time>
               </span>
             
           
@@ -285,7 +285,7 @@ s_i=[x_i,y_i,\beta_i]^T\in \mathbb{R}×S^1 \tag{1.1}</script><p>and therefore th
 <script type="math/tex; mode=display">C :=\lbrace s_i \rbrace _{i=0...n} ~~ n \in N \tag{1.2}</script><p>The TEB augments this representation into temporal space thus leads to:</p>
 <script type="math/tex; mode=display">\tau = \lbrace \Delta T_i \rbrace _{i=0...n-1} \tag{1.3}</script><p>Thus the TEB is defined as a tuple of the above both sequences:</p>
 <script type="math/tex; mode=display">B:=(C, \tau)  \tag{1.4}</script><p>From above knowledge,we construct a combinatorial optimization objective:</p>
-<script type="math/tex; mode=display">f(B) = \sum_{i}\gamma_i f_i(B) \tag{1.5}</script><script type="math/tex; mode=display">B^*=argmin~f(B) \tag{1.6}</script><p>in which  <strong><em>B*</em></strong> denotes the optimal parameter which the car’s motion will follow in subsequent temporal intervals.The timed elastic band configuration sapce is shown in <strong>Figure 1</strong> as following statements.</p>
+<script type="math/tex; mode=display">f(B) = \sum_{i}\gamma_i f_i(B) \tag{1.5}</script><script type="math/tex; mode=display">B^*=argmin~f(B) \tag{1.6}</script><p>in which  <strong>B</strong> denotes the optimal parameter which the car’s motion will follow in subsequent temporal intervals.The timed elastic band configuration sapce is shown in <strong>Figure 1</strong> as following statements.</p>
 <div align="center">
     <img src="../img/Configure.png" width="530" height="200" alt="Figure 1.Configuration Space of TEB" align="center">
 </div>
@@ -452,7 +452,7 @@ s.t. ~\mathscr{F}(z)~= \sum _{m=1}^M \frac{A_m}{z-\zeta _m}~,where~A_m ~=\frac{f
 <img src="../img/H-augmented.png" width="650" height="290" alt="Figure 9.Analytical solution illustration" align="center">
 </div>    
 
-<h4 id="D-Trajectories-Finding-in-Distinctive-Homotopy-Classes"><a href="#D-Trajectories-Finding-in-Distinctive-Homotopy-Classes" class="headerlink" title="D. Trajectories Finding in Distinctive Homotopy Classes"></a><em>D. Trajectories Finding in Distinctive Homotopy Classes</em></h4><p>Recalling the statements referred in the beginning of this section,TEB local planner often find a trajactory which be always trapped into the local optimality.Therefore,a feasible trajectory finding method which is in the foundation of distictive homotopy classes will be used to cope with this tricky problem.In order to find an optimal trajectory in distinctive classes,two steps of finding all simple paths and filtering homologue paths is combined into a single search algorithm which is a modified <strong>Depth First Search</strong> algorithm,first of all,a certain large number of samples in a selected region is required<strong>Figure 10</strong>,</p>
+<h4 id="D-Trajectories-Finding-in-Distinctive-Homotopy-Classes"><a href="#D-Trajectories-Finding-in-Distinctive-Homotopy-Classes" class="headerlink" title="D. Trajectories Finding in Distinctive Homotopy Classes"></a><em>D. Trajectories Finding in Distinctive Homotopy Classes</em></h4><p>Recalling the statements referred in the beginning of this section,TEB local planner often find a trajactory which be always trapped into the local optimality.Therefore,a feasible trajectory finding method which is in the foundation of distictive homotopy classes will be used to cope with this tricky problem.In order to find an optimal trajectory in distinctive classes,two steps of finding all simple paths and filtering homologue paths is combined into a single search algorithm which is a modified <strong>Depth First Search</strong> algorithm,first of all,a certain large number of samples in a selected region is required <strong>Figure 10</strong>.</p>
 <div align="center">
 <img src="../img/samples.png" width="550" height="350" alt="Figure 10.Samples in an expanded region" align="center">
 </div>
@@ -468,10 +468,12 @@ The optimal path can be selected from alternative homotopy classes and the traje
 <div align="center">
 <img src="../img/DFS_modified.png" width="500" height="600" alt="Figure 12.Finding paths in alternative homotopy classes" align="center">
 </div>
-Here I will show you the recursion steps of depth first search process in an illustrated instance which is shown in **Figure 13**.    
+Here I will show you the recursion steps of depth first search process in an illustrated instance which **Figure 13** shows as:
+
 ----
 ### Closed Loop (Sub-)Optimization Output Generation ###
 ----
+
 In general,the coarse initial trajectories can be selected according to the global planner,the optimizer will generate a series of (sub-)optimum from TEB local planner,and these (sub-)optimum will also be an initial value for the planner in the next sampling interval.Therefore,the optimizer constructs a cloosed loop system,and with help of path finding in distinctive homotopy classes the planner will find an feasible trajectory in a certain region.However,since the optimization problem minimize transition time towards a fixed final configuration,the strategy will definately shrink the searching horizon thus leads to a shringking length of trajectory.Obviously, more configurations must be inserted or deleted in order to fit these changes:
 $$\begin{cases}
 if ~\Delta T_k <\delta t_{ref}-\delta t_{hysterisis} \bigwedge n>n _{min},~remove~s _k, \\
